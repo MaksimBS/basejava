@@ -9,3 +9,4 @@
 
 Занятие 2:
 * Размещены классы по пакетам.
+* Реализован в ArrayStorage метод update(Resume resume). Проверен в MainTestArrayStorage

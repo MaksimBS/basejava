@@ -22,12 +22,21 @@ public class ArrayStorage {
     }
 
     public Resume get(String uuid) {
+        try {
+            return allResume[getIndex(uuid)];
+        } catch (Exception e) {
+            System.out.println("Resume is not found");
+            return null;
+        }
+    }
+
+    private int getIndex(String uuid) {
         for (int i = 0; i < size; i++) {
             if (allResume[i].getUuid().equals(uuid)) {
-                return allResume[i];
+                return i;
             }
         }
-        return null;
+        throw new IllegalArgumentException("arguments not found");
     }
 
     public void delete(String uuid) {
@@ -56,11 +65,11 @@ public class ArrayStorage {
         return size;
     }
 
-    public void update (Resume resume) {
-        for (int i = 0; i < size; i++) {
-            if (allResume[i].getUuid().equals(resume.getUuid())) {
-                allResume[i] = resume;
-            }
+    public void update(Resume resume) {
+        try {
+            allResume[getIndex(resume.getUuid())] = resume;
+        } catch (Exception e) {
+            System.out.println("Resume is not found");
         }
     }
 }
