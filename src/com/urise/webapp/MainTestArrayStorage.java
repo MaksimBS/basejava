@@ -17,23 +17,39 @@ public class MainTestArrayStorage {
         Resume r3 = new Resume();
         r3.setUuid("uuid3");
 
+        //Entry
         ARRAY_STORAGE.save(r1);
+        System.out.println("Entry r1: " + ARRAY_STORAGE.get(r1.getUuid()));
         ARRAY_STORAGE.save(r2);
+        System.out.println("Entry r2: " + ARRAY_STORAGE.get(r2.getUuid()));
+        ARRAY_STORAGE.save(r3);
+        System.out.println("Entry r3: " + ARRAY_STORAGE.get(r3.getUuid()));
+        System.out.print("Entry r3 again: ");
         ARRAY_STORAGE.save(r3);
 
+        //Get
         System.out.println("Get r1: " + ARRAY_STORAGE.get(r1.getUuid()));
         System.out.println("Size: " + ARRAY_STORAGE.size());
+        System.out.print("Get dummy: ");
+        ARRAY_STORAGE.get("dummy");
+        System.out.println();
 
-        System.out.println("Get dummy: " + ARRAY_STORAGE.get("dummy"));
-
-        printAll();
+        //Update
+        System.out.print("Update resume r3: ");
+        ARRAY_STORAGE.update(r3);
+        System.out.println();
+        System.out.print("Update new resume: ");
         Resume r4 = new Resume();
-        r3.setUuid("uuid4");
+        r4.setUuid("uuid4");
         ARRAY_STORAGE.update(r4);
 
+        //delete
         printAll();
         ARRAY_STORAGE.delete(r1.getUuid());
+        ARRAY_STORAGE.delete(r4.getUuid());
         printAll();
+
+        //clear
         ARRAY_STORAGE.clear();
         printAll();
 

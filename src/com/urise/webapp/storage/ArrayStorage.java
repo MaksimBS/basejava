@@ -17,8 +17,17 @@ public class ArrayStorage {
     }
 
     public void save(Resume resume) {
-        allResume[size] = resume;
-        size++;
+        try {
+            getIndex(resume.getUuid());
+            System.out.println("This resume is already in the bank");
+        } catch (Exception e) {
+            if (size < allResume.length) {
+                allResume[size] = resume;
+                size++;
+            } else {
+                System.out.println("Resume bank is full");
+            }
+        }
     }
 
     public Resume get(String uuid) {
@@ -49,6 +58,8 @@ public class ArrayStorage {
         }
         if (find) {
             size--;
+        } else {
+            System.out.println("Resume is not found");
         }
     }
 
