@@ -30,15 +30,6 @@ public class ArrayStorage {
         }
     }
 
-    public Resume get(String uuid) {
-        try {
-            return allResume[getIndex(uuid)];
-        } catch (Exception e) {
-            System.out.println("Resume is not found");
-            return null;
-        }
-    }
-
     private int getIndex(String uuid) {
         for (int i = 0; i < size; i++) {
             if (allResume[i].getUuid().equals(uuid)) {
@@ -48,17 +39,21 @@ public class ArrayStorage {
         throw new IllegalArgumentException("arguments not found");
     }
 
-    public void delete(String uuid) {
-        boolean find = false;
-        for (int i = 0; i < size; i++) {
-            if (allResume[i].getUuid().equals(uuid) || find) {
-                find = true;
-                allResume[i] = allResume[i + 1];
-            }
+    public Resume get(String uuid) {
+        try {
+            return allResume[getIndex(uuid)];
+        } catch (Exception e) {
+            System.out.println("Resume is not found");
+            return null;
         }
-        if (find) {
+    }
+
+    public void delete(String uuid) {
+        try {
+            allResume[getIndex(uuid)] = allResume[size-1];
+            allResume[size-1] = null;
             size--;
-        } else {
+        } catch (Exception e) {
             System.out.println("Resume is not found");
         }
     }
