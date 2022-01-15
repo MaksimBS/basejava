@@ -2,6 +2,8 @@ package com.urise.webapp.storage;
 
 import com.urise.webapp.model.Resume;
 
+import java.util.Arrays;
+
 /**
  * Array based storage for Resumes
  */
@@ -31,12 +33,14 @@ public class ArrayStorage {
     }
 
     private int getIndex(String uuid) {
-        for (int i = 0; i < size; i++) {
-            if (allResume[i].getUuid().equals(uuid)) {
-                return i;
-            }
+        Resume searchKey = new Resume();
+        searchKey.setUuid(uuid);
+        Arrays.sort(allResume, 0, size);
+        int index = Arrays.binarySearch(allResume, 0, size, searchKey);
+        if (index >= 0) {
+            return index;
         }
-        throw new IllegalArgumentException("arguments not found");
+        throw new IllegalArgumentException("Resume not found");
     }
 
     public Resume get(String uuid) {
@@ -50,8 +54,8 @@ public class ArrayStorage {
 
     public void delete(String uuid) {
         try {
-            allResume[getIndex(uuid)] = allResume[size-1];
-            allResume[size-1] = null;
+            allResume[getIndex(uuid)] = allResume[size - 1];
+            allResume[size - 1] = null;
             size--;
         } catch (Exception e) {
             System.out.println("Resume is not found");
