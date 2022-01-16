@@ -7,8 +7,10 @@ import java.util.Arrays;
 /**
  * Array based storage for Resumes
  */
-public class ArrayStorage {
-    private Resume[] allResume = new Resume[10000];
+public class ArrayStorage implements Storage {
+    private static final int STORAGE_LIMIT = 10000;
+
+    private Resume[] allResume = new Resume[STORAGE_LIMIT];
     private int size = 0;
 
     public void clear() {
@@ -21,7 +23,7 @@ public class ArrayStorage {
             getIndex(resume.getUuid());
             System.out.println("This resume is already in the bank");
         } catch (Exception e) {
-            if (size < allResume.length) {
+            if (size < STORAGE_LIMIT) {
                 allResume[size] = resume;
                 size++;
             } else {
