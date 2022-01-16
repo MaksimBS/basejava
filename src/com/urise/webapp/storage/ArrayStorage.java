@@ -12,9 +12,7 @@ public class ArrayStorage {
     private int size = 0;
 
     public void clear() {
-        for (int i = 0; i < size; i++) {
-            allResume[i] = null;
-        }
+        Arrays.fill(allResume, 0, size, null);
         size = 0;
     }
 
