@@ -13,7 +13,7 @@ public class Resume implements Comparable<Resume> {
     }
 
     public int compareTo (Resume p) {
-        return this.uuid.compareTo(p.uuid);
+        return uuid.compareTo(p.uuid);
     }
 
     public void setUuid(String uuid) {
