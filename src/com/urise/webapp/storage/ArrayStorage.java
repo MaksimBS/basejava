@@ -17,7 +17,7 @@ public class ArrayStorage {
     }
 
     public void save(Resume resume) {
-        int index = getIndex(resume.getUuid());
+        int index = findIndex(resume.getUuid());
         if (index == -1) {
             if (size < storage.length) {
                 storage[size] = resume;
@@ -31,16 +31,16 @@ public class ArrayStorage {
     }
 
     public Resume get(String uuid) {
-        int index = getIndex(uuid);
+        int index = findIndex(uuid);
         if (index == -1) {
             System.out.println("Resume " + uuid + " is not found");
             return null;
-        } else {
-            return storage[index];
         }
+        return storage[index];
+
     }
 
-    private int getIndex(String uuid) {
+    private int findIndex(String uuid) {
         for (int i = 0; i < size; i++) {
             if (storage[i].getUuid().equals(uuid)) {
                 return i;
@@ -50,7 +50,7 @@ public class ArrayStorage {
     }
 
     public void delete(String uuid) {
-        int index = getIndex(uuid);
+        int index = findIndex(uuid);
         if (index == -1) {
             System.out.println("Resume " + uuid + " is not found");
         } else {
@@ -64,7 +64,7 @@ public class ArrayStorage {
      * @return array, contains only Resumes in storage (without null)
      */
     public Resume[] getAll() {
-        return Arrays.copyOfRange(storage, 0, size);
+        return Arrays.copyOf(storage, size);
     }
 
     public int size() {
@@ -72,11 +72,11 @@ public class ArrayStorage {
     }
 
     public void update(Resume resume) {
-        int index = getIndex(resume.getUuid());
+        int index = findIndex(resume.getUuid());
         if (index == -1) {
             System.out.println("Resume " + resume.getUuid() + " is not found");
         } else {
-            storage[getIndex(resume.getUuid())] = resume;
+            storage[index] = resume;
         }
     }
 }
