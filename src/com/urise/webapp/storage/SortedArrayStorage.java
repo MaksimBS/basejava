@@ -33,18 +33,11 @@ public class SortedArrayStorage extends AbstractArrayStorage {
         }
     }
 
-    @Override
-    public void delete(String uuid) {
-        int index = findIndex(uuid);
-        if (index < 0) {
-            System.out.println("Resume " + uuid + " is not found");
-        } else {
-            //делаем копию массива от индекса и до конца (все +1)
-            //потом сдвигаем в рабочий массив.
-            Resume[] tempStorage = Arrays.copyOfRange(storage, index + 1, size + 1);
-            System.arraycopy(tempStorage, 0, storage, index, tempStorage.length);
-            size--;
-        }
+    protected void fillDelitedElement(int index) {
+        //делаем копию массива от индекса и до конца (все +1)
+        //потом сдвигаем в рабочий массив.
+        Resume[] tempStorage = Arrays.copyOfRange(storage, index + 1, size + 1);
+        System.arraycopy(tempStorage, 0, storage, index, tempStorage.length);
     }
 
     @Override

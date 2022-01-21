@@ -51,15 +51,8 @@ public class ArrayStorage extends AbstractArrayStorage {
         return -1;
     }
 
-    public void delete(String uuid) {
-        int index = findIndex(uuid);
-        if (index < 0) {
-            System.out.println("Resume " + uuid + " is not found");
-        } else {
-            storage[index] = storage[size - 1];
-            storage[size - 1] = null;
-            size--;
-        }
+    protected void fillDelitedElement(int index) {
+        storage[index] = storage[size - 1];
     }
 
     /**

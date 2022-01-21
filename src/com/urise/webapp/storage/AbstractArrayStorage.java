@@ -23,6 +23,18 @@ public abstract class AbstractArrayStorage implements Storage {
         return null;
     }
 
+    public void delete(String uuid) {
+        int index = findIndex(uuid);
+        if (index < 0) {
+            System.out.println("Resume " + uuid + " is not found");
+        } else {
+            fillDelitedElement(index);
+            size--;
+        }
+    }
+
+    protected abstract void fillDelitedElement(int index);
+
     public int size() {
         return size;
     }
