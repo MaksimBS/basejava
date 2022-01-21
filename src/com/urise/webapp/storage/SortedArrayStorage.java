@@ -33,6 +33,20 @@ public class SortedArrayStorage extends AbstractArrayStorage {
         }
     }
 
+    @Override
+    protected void insertNewResume(Resume res, int index) {
+        if (size == Math.abs(index) - 1) {
+            //запись в конец массива, не выходит за пределы массива
+            storage[size] = res;
+        } else {
+            //запись в середину массива
+            Resume[] tempStorage = Arrays.copyOfRange(storage, Math.abs(index) - 1, size);
+            storage[Math.abs(index) - 1] = res;
+            System.arraycopy(tempStorage, 0, storage, Math.abs(index), tempStorage.length);
+        }
+    }
+
+    @Override
     protected void fillDelitedElement(int index) {
         //делаем копию массива от индекса и до конца (все +1)
         //потом сдвигаем в рабочий массив.

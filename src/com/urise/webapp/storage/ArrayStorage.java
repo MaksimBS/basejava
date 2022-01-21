@@ -10,26 +10,14 @@ import java.util.Arrays;
 public class ArrayStorage extends AbstractArrayStorage {
     private static final int STORAGE_LIMIT = 10000;
 
-///    private Resume[] storage = new Resume[STORAGE_LIMIT];
-//    private int size = 0;
 
     public void clear() {
         Arrays.fill(storage, 0, size, null);
         size = 0;
     }
 
-    public void save(Resume resume) {
-        int index = findIndex(resume.getUuid());
-        if (index < 0) {
-            if (size < STORAGE_LIMIT) {
-                storage[size] = resume;
-                size++;
-            } else {
-                System.out.println("Resume bank is full");
-            }
-        } else {
-            System.out.println("This resume " + resume.getUuid() + " is already in the bank");
-        }
+    protected void insertNewResume(Resume Res, int index) {
+        storage[size] = Res;
     }
 
     public Resume get(String uuid) {
