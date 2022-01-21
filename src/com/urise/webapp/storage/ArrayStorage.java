@@ -10,8 +10,8 @@ import java.util.Arrays;
 public class ArrayStorage extends AbstractArrayStorage {
     private static final int STORAGE_LIMIT = 10000;
 
-    private Resume[] storage = new Resume[STORAGE_LIMIT];
-    private int size = 0;
+///    private Resume[] storage = new Resume[STORAGE_LIMIT];
+//    private int size = 0;
 
     public void clear() {
         Arrays.fill(storage, 0, size, null);
@@ -53,6 +53,7 @@ public class ArrayStorage extends AbstractArrayStorage {
 
     protected void fillDelitedElement(int index) {
         storage[index] = storage[size - 1];
+        storage[size - 1] = null;
     }
 
     /**
