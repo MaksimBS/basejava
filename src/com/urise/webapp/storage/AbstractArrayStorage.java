@@ -28,7 +28,7 @@ public abstract class AbstractArrayStorage implements Storage {
         if (index < 0) {
             System.out.println("Resume " + uuid + " is not found");
         } else {
-            fillDelitedElement(index);
+            fillDelitedResume(index);
             size--;
         }
     }
@@ -49,7 +49,7 @@ public abstract class AbstractArrayStorage implements Storage {
 
     protected abstract void insertNewResume(Resume res, int index);
 
-    protected abstract void fillDelitedElement(int index);
+    protected abstract void fillDelitedResume(int index);
 
     public int size() {
         return size;

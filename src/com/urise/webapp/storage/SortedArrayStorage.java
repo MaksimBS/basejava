@@ -23,7 +23,7 @@ public class SortedArrayStorage extends AbstractArrayStorage {
     }
 
     @Override
-    protected void fillDelitedElement(int index) {
+    protected void fillDelitedResume(int index) {
         //делаем копию массива от индекса и до конца (все +1)
         //потом сдвигаем в рабочий массив.
         Resume[] tempStorage = Arrays.copyOfRange(storage, index + 1, size + 1);
