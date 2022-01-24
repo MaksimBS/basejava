@@ -11,23 +11,22 @@ public class SortedArrayStorage extends AbstractArrayStorage {
 
     @Override
     protected void insertNewResume(Resume res, int index) {
-        if (size == Math.abs(index) - 1) {
+        if (size == -index - 1) {
             //запись в конец массива, не выходит за пределы массива
             storage[size] = res;
         } else {
             //запись в середину массива
-            Resume[] tempStorage = Arrays.copyOfRange(storage, Math.abs(index) - 1, size);
-            storage[Math.abs(index) - 1] = res;
-            System.arraycopy(tempStorage, 0, storage, Math.abs(index), tempStorage.length);
+            int insertIndex = -index - 1;
+            //необходимо сдвинуть массив от индекса элемента вставки
+            System.arraycopy(storage, insertIndex, storage, insertIndex + 1, size - insertIndex);
+            storage[insertIndex] = res;
         }
     }
 
     @Override
-    protected void fillDelitedResume(int index) {
-        //делаем копию массива от индекса и до конца (все +1)
-        //потом сдвигаем в рабочий массив.
-        Resume[] tempStorage = Arrays.copyOfRange(storage, index + 1, size + 1);
-        System.arraycopy(tempStorage, 0, storage, index, tempStorage.length);
+    protected void fillDeletedResume(int index) {
+        //сдвигаем весь массив в лево на элемент индекса.
+        System.arraycopy(storage, index + 1, storage, index, size - 1);
     }
 
     @Override
