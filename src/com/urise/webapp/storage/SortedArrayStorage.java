@@ -11,16 +11,10 @@ public class SortedArrayStorage extends AbstractArrayStorage {
 
     @Override
     protected void insertNewResume(Resume res, int index) {
-        if (size == -index - 1) {
-            //запись в конец массива, не выходит за пределы массива
-            storage[size] = res;
-        } else {
-            //запись в середину массива
-            int insertIndex = -index - 1;
-            //необходимо сдвинуть массив от индекса элемента вставки
-            System.arraycopy(storage, insertIndex, storage, insertIndex + 1, size - insertIndex);
-            storage[insertIndex] = res;
-        }
+        int insertIndex = -index - 1;
+        //необходимо сдвинуть массив от индекса элемента вставки
+        System.arraycopy(storage, insertIndex, storage, insertIndex + 1, size - insertIndex);
+        storage[insertIndex] = res;
     }
 
     @Override
@@ -31,8 +25,7 @@ public class SortedArrayStorage extends AbstractArrayStorage {
 
     @Override
     protected int findIndex(String uuid) {
-        Resume searchKey = new Resume();
-        searchKey.setUuid(uuid);
+        Resume searchKey = new Resume(uuid);
         return Arrays.binarySearch(storage, 0, size, searchKey);
     }
 }
