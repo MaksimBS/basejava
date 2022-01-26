@@ -1,10 +1,14 @@
 package com.urise.webapp.storage;
 
 import com.urise.webapp.exception.NotExistStorageException;
+import com.urise.webapp.exception.StorageException;
 import com.urise.webapp.model.Resume;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+
+import static com.urise.webapp.storage.AbstractArrayStorage.STORAGE_LIMIT;
+import static org.junit.Assert.fail;
 
 public abstract class AbstractStorageTest {
     protected Storage storage;
@@ -41,11 +45,7 @@ public abstract class AbstractStorageTest {
     public void delete() {
         storage.delete(UUID_1);
         Assert.assertEquals(storage.size(), 2);
-        //Удалили 1, но остался 2 и 3.
-        fillDeletedResume();
     }
-
-    protected abstract void fillDeletedResume();
 
     @Test(expected = NotExistStorageException.class)
     public void deleteNotExist() {
@@ -58,10 +58,7 @@ public abstract class AbstractStorageTest {
         Assert.assertEquals(storage.get(UUID_4), new Resume(UUID_4));
         Assert.assertEquals(storage.get(UUID_4), new Resume(UUID_4));
         Assert.assertEquals(storage.size(), 4);
-        sortedSave();
     }
-
-    protected abstract void sortedSave();
 
     @Test
     public void size() {
@@ -83,5 +80,17 @@ public abstract class AbstractStorageTest {
     public void update() {
         storage.update(new Resume(UUID_1));
         Assert.assertEquals(storage.get(UUID_1), new Resume(UUID_1));
+    }
+
+    @Test(expected = StorageException.class)
+    public void saveOverflow() throws Exception {
+        try {
+            for (int i = storage.size(); i < STORAGE_LIMIT; i++) {
+                storage.save(new Resume());
+            }
+        } catch (StorageException exception) {
+            fail("Error");
+        }
+        storage.save(new Resume());
     }
 }
