@@ -47,11 +47,23 @@ public abstract class AbstractStorageTest {
     @Test
     public void delete() {
         storage.delete(UUID_1);
+        /** в delete() так же проверяй, что резюме удалено
+         я придумал 2 способа, 1 - повторно удалить и правильно будет если словим ошибку.
+                               2 - проверить оставшиеся элементы,
+         пошел по первому варианту.
+
+         в delete fail("Повторное удаление, без проблем"); размести вместо assertNotEquals("", thrown.getMessage());
+         Вот здесь мне не очень понятно.
+         Моя логика такая, что при попытке повторного удаления у меня должен произойти эксепшин
+         если этого не произошло тогда ошибка.
+         а сейчас, если я фол размещаю в кэтч, то у меня при правильном проходе будет ошибка.
+         */
         try {
             storage.delete(UUID_1);
-            fail("Повторное удаление, без проблем");
+            //fail("Повторное удаление, без проблем")
         } catch (NotExistStorageException thrown) {
-            assertNotEquals("", thrown.getMessage());
+            //assertNotEquals("", thrown.getMessage());
+            fail("Ошибка при повторном удалении");
         }
 
         assertEquals(2, storage.size());
@@ -64,11 +76,12 @@ public abstract class AbstractStorageTest {
 
     @Test
     public void save() {
-        assertEquals(3, storage.size());
+        storage.save(new Resume(UUID_4));
+        assertEquals(4, storage.size());
     }
 
     @Test(expected = ExistStorageException.class)
-    public void ExistStorageSeve() {
+    public void saveExistStorage() {
         storage.save(new Resume(UUID_1));
     }
 
@@ -87,19 +100,26 @@ public abstract class AbstractStorageTest {
     @Test
     public void getAll() {
         assertEquals(3, storage.getAll().length);
-        List<Resume> tempStorage = Arrays.asList(new Resume(UUID_1), new Resume(UUID_2), new Resume(UUID_3));
-        assertEquals(Arrays.asList(storage.getAll()), tempStorage);
+        List<Resume> expected = Arrays.asList(new Resume(UUID_1), new Resume(UUID_2), new Resume(UUID_3));
+        assertEquals(expected, Arrays.asList(storage.getAll()));
 
     }
 
     @Test
     public void update() {
-        storage.update(new Resume(UUID_1));
-        assertEquals(new Resume(UUID_1), storage.get(UUID_1));
+        Resume testResume = new Resume(UUID_1);
+        storage.update(testResume);
+        assertEquals(testResume, storage.get(UUID_1));
     }
 
+    @Test(expected = NotExistStorageException.class)
+    public void updateNotExist() {
+        storage.update(new Resume(DUMMY));
+    }
+
+
     @Test(expected = StorageException.class)
-    public void saveOverflow() throws Exception {
+    public void saveOverflow() {
         try {
             for (int i = storage.size(); i < STORAGE_LIMIT; i++) {
                 storage.save(new Resume());
