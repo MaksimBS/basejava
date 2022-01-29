@@ -7,9 +7,6 @@ import com.urise.webapp.model.Resume;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.util.Arrays;
-import java.util.List;
-
 import static com.urise.webapp.storage.AbstractArrayStorage.STORAGE_LIMIT;
 import static org.junit.Assert.*;
 
@@ -17,9 +14,13 @@ import static org.junit.Assert.*;
 public abstract class AbstractStorageTest {
     protected Storage storage;
     public static final String UUID_1 = "uuid1";
+    public static final Resume r1 = new Resume(UUID_1);
     public static final String UUID_2 = "uuid2";
+    public static final Resume r2 = new Resume(UUID_2);
     public static final String UUID_3 = "uuid3";
+    public static final Resume r3 = new Resume(UUID_3);
     public static final String UUID_4 = "uuid4";
+    public static final Resume r4 = new Resume(UUID_4);
     public static final String DUMMY = "dummy";
 
     protected AbstractStorageTest(Storage storage) {
@@ -29,14 +30,14 @@ public abstract class AbstractStorageTest {
     @Before
     public void setUp() {
         storage.clear();
-        storage.save(new Resume(UUID_1));
-        storage.save(new Resume(UUID_2));
-        storage.save(new Resume(UUID_3));
+        storage.save(r1);
+        storage.save(r2);
+        storage.save(r3);
     }
 
     @Test
     public void get() {
-        assertEquals(new Resume(UUID_1), storage.get(UUID_1));
+        assertEquals(r1, storage.get(UUID_1));
     }
 
     @Test(expected = NotExistStorageException.class)
@@ -47,26 +48,9 @@ public abstract class AbstractStorageTest {
     @Test
     public void delete() {
         storage.delete(UUID_1);
-        /** в delete() так же проверяй, что резюме удалено
-         я придумал 2 способа, 1 - повторно удалить и правильно будет если словим ошибку.
-                               2 - проверить оставшиеся элементы,
-         пошел по первому варианту.
-
-         в delete fail("Повторное удаление, без проблем"); размести вместо assertNotEquals("", thrown.getMessage());
-         Вот здесь мне не очень понятно.
-         Моя логика такая, что при попытке повторного удаления у меня должен произойти эксепшин
-         если этого не произошло тогда ошибка.
-         а сейчас, если я фол размещаю в кэтч, то у меня при правильном проходе будет ошибка.
-         */
-        try {
-            storage.delete(UUID_1);
-            //fail("Повторное удаление, без проблем")
-        } catch (NotExistStorageException thrown) {
-            //assertNotEquals("", thrown.getMessage());
-            fail("Ошибка при повторном удалении");
-        }
-
         assertEquals(2, storage.size());
+        assertEquals(r2, storage.get(UUID_2));
+        assertEquals(r3, storage.get(UUID_3));
     }
 
     @Test(expected = NotExistStorageException.class)
@@ -76,13 +60,14 @@ public abstract class AbstractStorageTest {
 
     @Test
     public void save() {
-        storage.save(new Resume(UUID_4));
+        storage.save(r4);
         assertEquals(4, storage.size());
+        assertEquals(r4, storage.get(r4.getUuid()));
     }
 
     @Test(expected = ExistStorageException.class)
     public void saveExistStorage() {
-        storage.save(new Resume(UUID_1));
+        storage.save(r1);
     }
 
 
@@ -99,17 +84,17 @@ public abstract class AbstractStorageTest {
 
     @Test
     public void getAll() {
-        assertEquals(3, storage.getAll().length);
-        List<Resume> expected = Arrays.asList(new Resume(UUID_1), new Resume(UUID_2), new Resume(UUID_3));
-        assertEquals(expected, Arrays.asList(storage.getAll()));
-
+        Resume[] array = storage.getAll();
+        assertEquals(3, array.length);
+        assertEquals(r1, array[0]);
+        assertEquals(r2, array[1]);
+        assertEquals(r3, array[2]);
     }
 
     @Test
     public void update() {
-        Resume testResume = new Resume(UUID_1);
-        storage.update(testResume);
-        assertEquals(testResume, storage.get(UUID_1));
+        storage.update(r1);
+        assertSame(r1, storage.get(UUID_1));
     }
 
     @Test(expected = NotExistStorageException.class)
