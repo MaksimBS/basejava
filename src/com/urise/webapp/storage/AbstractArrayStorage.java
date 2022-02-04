@@ -38,12 +38,8 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
     }
 
     @Override
-    public Resume get(String uuid) {
-        int index = findIndex(uuid);
-        if (index >= 0) {
-            return storage[findIndex(uuid)];
-        }
-        throw new NotExistStorageException(uuid);
+    public Resume getbyIndex(int index) {
+        return storage[index];
     }
 
     @Override
@@ -67,13 +63,8 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
         return size;
     }
 
-    @Override
-    public void update(Resume resume) {
-        int index = findIndex(resume.getUuid());
-        if (index < 0) {
-            throw new NotExistStorageException(resume.getUuid());
-        } else {
-            storage[index] = resume;
-        }
+    public void setResume(Resume resume, int index) {
+        storage[index] = resume;
     }
+
 }

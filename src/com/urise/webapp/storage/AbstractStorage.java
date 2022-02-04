@@ -21,7 +21,7 @@ public abstract class AbstractStorage implements Storage {
         if (storage.contains(resume)) {
             throw new ExistStorageException(resume.getUuid());
         } else {
-            insertNewResume(resume,0);
+            insertNewResume(resume, 0);
         }
     }
 
@@ -33,9 +33,13 @@ public abstract class AbstractStorage implements Storage {
     public Resume get(String uuid) {
         int index = findIndex(uuid);
         if (index >= 0) {
-            return storage.get(index);
+            return getbyIndex(index);
         }
         throw new NotExistStorageException(uuid);
+    }
+
+    public Resume getbyIndex(int index) {
+        return storage.get(index);
     }
 
     @Override
@@ -61,11 +65,15 @@ public abstract class AbstractStorage implements Storage {
 
     @Override
     public void update(Resume resume) {
-        int index = storage.indexOf(resume);
+        int index = findIndex(resume.getUuid());
         if (index < 0) {
             throw new NotExistStorageException(resume.getUuid());
         } else {
-            storage.set(index, resume);
+            setResume(resume, index);
         }
+    }
+
+    public void setResume(Resume resume, int index) {
+        storage.set(index, resume);
     }
 }
