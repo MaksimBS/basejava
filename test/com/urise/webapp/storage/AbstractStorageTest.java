@@ -2,13 +2,12 @@ package com.urise.webapp.storage;
 
 import com.urise.webapp.exception.ExistStorageException;
 import com.urise.webapp.exception.NotExistStorageException;
-import com.urise.webapp.exception.StorageException;
 import com.urise.webapp.model.Resume;
 import org.junit.Before;
 import org.junit.Test;
 
-import static com.urise.webapp.storage.AbstractArrayStorage.STORAGE_LIMIT;
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertSame;
 
 
 public abstract class AbstractStorageTest {
@@ -45,12 +44,11 @@ public abstract class AbstractStorageTest {
         storage.get(DUMMY);
     }
 
-    @Test
+    @Test(expected = NotExistStorageException.class)
     public void delete() {
         storage.delete(UUID_1);
         assertEquals(2, storage.size());
-        assertEquals(r2, storage.get(UUID_2));
-        assertEquals(r3, storage.get(UUID_3));
+        storage.get(UUID_1);
     }
 
     @Test(expected = NotExistStorageException.class)
@@ -62,14 +60,13 @@ public abstract class AbstractStorageTest {
     public void save() {
         storage.save(r4);
         assertEquals(4, storage.size());
-        assertEquals(r4, storage.get(r4.getUuid()));
+        assertEquals(r4, storage.get(UUID_4));
     }
 
     @Test(expected = ExistStorageException.class)
-    public void saveExistStorage() {
+    public void saveExist() {
         storage.save(r1);
     }
-
 
     @Test
     public void size() {
@@ -100,18 +97,5 @@ public abstract class AbstractStorageTest {
     @Test(expected = NotExistStorageException.class)
     public void updateNotExist() {
         storage.update(new Resume(DUMMY));
-    }
-
-
-    @Test(expected = StorageException.class)
-    public void saveOverflow() {
-        try {
-            for (int i = storage.size(); i < STORAGE_LIMIT; i++) {
-                storage.save(new Resume());
-            }
-        } catch (StorageException exception) {
-            fail("Переполнение раньше времени");
-        }
-        storage.save(new Resume());
     }
 }
