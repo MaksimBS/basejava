@@ -82,14 +82,11 @@ public abstract class AbstractStorageTest {
 
     @Test
     public void getAll() {
-        Resume[] array = storage.getAll();
-        Resume[] testArray = new Resume[3];
-        testArray[0] = r1;
-        testArray[1] = r2;
-        testArray[2] = r3;
+        Resume[] actual = storage.getAll();
+        Resume[] expected = {r1, r2, r3};
 
-        assertEquals(3, array.length);
-        Assert.assertArrayEquals( testArray, array );
+        assertEquals(3, actual.length);
+        Assert.assertArrayEquals( expected, actual);
     }
 
     @Test

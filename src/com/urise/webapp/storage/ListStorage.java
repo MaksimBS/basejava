@@ -20,7 +20,7 @@ public class ListStorage extends AbstractStorage {
     }
 
     @Override
-    public Resume getbyIndex(int index) {
+    public Resume getByIndex(int index) {
         return storage.get(index);
     }
 
@@ -56,10 +56,6 @@ public class ListStorage extends AbstractStorage {
 
     public int size() {
         return storage.size();
-    }
-
-    public void setResume(Resume resume, int index) {
-        storage.set(index, resume);
     }
 
     @Override

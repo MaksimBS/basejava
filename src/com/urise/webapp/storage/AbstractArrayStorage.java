@@ -36,7 +36,7 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
     }
 
     @Override
-    public Resume getbyIndex(int index) {
+    public Resume getByIndex(int index) {
         return storage[index];
     }
 
@@ -58,9 +58,5 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
 
     public int size() {
         return size;
-    }
-
-    public void setResume(Resume resume, int index) {
-        storage[index] = resume;
     }
 }
