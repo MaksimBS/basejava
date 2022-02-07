@@ -45,11 +45,10 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
         int index = findIndex(uuid);
         if (index < 0) {
             throw new NotExistStorageException(uuid);
-        } else {
-            fillDeletedResume(index);
-            storage[size - 1] = null;
-            size--;
         }
+        fillDeletedResume(index);
+        storage[size - 1] = null;
+        size--;
     }
 
     @Override

@@ -15,9 +15,8 @@ public class ListStorage extends AbstractStorage {
     public void save(Resume resume) {
         if (storage.contains(resume)) {
             throw new ExistStorageException(resume.getUuid());
-        } else {
-            insertNewResume(resume, 0);
         }
+        insertNewResume(resume, 0);
     }
 
     @Override
@@ -41,9 +40,8 @@ public class ListStorage extends AbstractStorage {
         int index = findIndex(uuid);
         if (index < 0) {
             throw new NotExistStorageException(uuid);
-        } else {
-            fillDeletedResume(index);
         }
+        fillDeletedResume(index);
     }
 
     @Override
