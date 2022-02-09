@@ -1,6 +1,5 @@
 package com.urise.webapp.storage;
 
-import com.urise.webapp.exception.StorageException;
 import com.urise.webapp.model.Resume;
 
 import java.util.Arrays;
@@ -11,13 +10,9 @@ import java.util.Arrays;
 public class SortedArrayStorage extends AbstractArrayStorage {
 
     @Override
-    protected void insertNewResume(Resume resume, int index) {
+    protected void addResToStorage(Resume resume, int index) {
         int insertIndex = -index - 1;
-        if (size >= STORAGE_LIMIT) {
-            throw new StorageException("Storage overflow", resume.getUuid());
-        }
         System.arraycopy(storage, insertIndex, storage, insertIndex + 1, size - insertIndex);
-        size++;
         updateResume(resume, insertIndex);
     }
 

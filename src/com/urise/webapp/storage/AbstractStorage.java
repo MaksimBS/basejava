@@ -32,7 +32,7 @@ public abstract class AbstractStorage implements Storage {
         updateResume(resume, index);
     }
 
-    protected abstract void updateResume(Resume res, int index);
+    protected abstract void updateResume(Resume resume, int index);
 
     @Override
     public void save(Resume resume) {
