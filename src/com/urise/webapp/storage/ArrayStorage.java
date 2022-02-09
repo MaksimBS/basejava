@@ -8,6 +8,10 @@ public class ArrayStorage extends AbstractArrayStorage {
         storage[size] = Res;
     }
 
+    protected void updateResume (Resume Res, int index) {
+        storage[index] = Res;
+    }
+
     protected int findIndex(String uuid) {
         for (int i = 0; i < size; i++) {
             if (storage[i].getUuid().equals(uuid)) {

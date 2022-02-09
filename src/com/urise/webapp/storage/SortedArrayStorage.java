@@ -14,7 +14,11 @@ public class SortedArrayStorage extends AbstractArrayStorage {
         int insertIndex = -index - 1;
         //необходимо сдвинуть массив от индекса элемента вставки
         System.arraycopy(storage, insertIndex, storage, insertIndex + 1, size - insertIndex);
-        storage[insertIndex] = res;
+        updateResume (res, insertIndex);
+    }
+
+    protected void updateResume (Resume resume, int index) {
+        storage[index] = resume;
     }
 
     @Override

@@ -28,6 +28,8 @@ public abstract class AbstractStorage implements Storage {
         if (index < 0) {
             throw new NotExistStorageException(resume.getUuid());
         }
-        insertNewResume(resume, index);
+        updateResume(resume, index);
     }
+
+    protected abstract void updateResume(Resume res, int index);
 }
