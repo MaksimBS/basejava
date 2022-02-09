@@ -1,5 +1,6 @@
 package com.urise.webapp.storage;
 
+import com.urise.webapp.exception.ExistStorageException;
 import com.urise.webapp.exception.NotExistStorageException;
 import com.urise.webapp.model.Resume;
 
@@ -29,6 +30,15 @@ public abstract class AbstractStorage implements Storage {
             throw new NotExistStorageException(resume.getUuid());
         }
         updateResume(resume, index);
+    }
+
+    @Override
+    public void save(Resume resume) {
+        int index = findIndex(resume.getUuid());
+        if (index >= 0) {
+            throw new ExistStorageException(resume.getUuid());
+        }
+        insertNewResume(resume, index);
     }
 
     protected abstract void updateResume(Resume res, int index);
