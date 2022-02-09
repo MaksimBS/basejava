@@ -43,5 +43,5 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
         size++;
     }
 
-    protected abstract void addResToStorage (Resume resume, int index);
+    protected abstract void addResToStorage(Resume resume, int index);
 }
