@@ -18,10 +18,10 @@ public class SortedArrayStorage extends AbstractArrayStorage {
         }
         System.arraycopy(storage, insertIndex, storage, insertIndex + 1, size - insertIndex);
         size++;
-        updateResume (resume, insertIndex);
+        updateResume(resume, insertIndex);
     }
 
-    protected void updateResume (Resume resume, int index) {
+    protected void updateResume(Resume resume, int index) {
         storage[index] = resume;
     }
 
@@ -29,6 +29,8 @@ public class SortedArrayStorage extends AbstractArrayStorage {
     protected void fillDeletedResume(int index) {
         //сдвигаем весь массив в лево на элемент индекса.
         System.arraycopy(storage, index + 1, storage, index, size - 1);
+        storage[size - 1] = null;
+        size--;
     }
 
     @Override

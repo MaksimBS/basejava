@@ -1,6 +1,5 @@
 package com.urise.webapp.storage;
 
-import com.urise.webapp.exception.NotExistStorageException;
 import com.urise.webapp.model.Resume;
 
 import java.util.Arrays;
@@ -14,8 +13,6 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
     protected Resume[] storage = new Resume[STORAGE_LIMIT];
     protected int size = 0;
 
-
-
     @Override
     public void clear() {
         Arrays.fill(storage, 0, size, null);
@@ -25,17 +22,6 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
     @Override
     public Resume getByIndex(int index) {
         return storage[index];
-    }
-
-    @Override
-    public void delete(String uuid) {
-        int index = findIndex(uuid);
-        if (index < 0) {
-            throw new NotExistStorageException(uuid);
-        }
-        fillDeletedResume(index);
-        storage[size - 1] = null;
-        size--;
     }
 
     @Override

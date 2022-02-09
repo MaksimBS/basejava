@@ -13,7 +13,7 @@ public class ArrayStorage extends AbstractArrayStorage {
         size++;
     }
 
-    protected void updateResume (Resume Res, int index) {
+    protected void updateResume(Resume Res, int index) {
         storage[index] = Res;
     }
 
@@ -28,5 +28,7 @@ public class ArrayStorage extends AbstractArrayStorage {
 
     protected void fillDeletedResume(int index) {
         storage[index] = storage[size - 1];
+        storage[size - 1] = null;
+        size--;
     }
 }

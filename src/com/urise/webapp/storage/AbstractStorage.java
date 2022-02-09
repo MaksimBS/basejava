@@ -32,6 +32,8 @@ public abstract class AbstractStorage implements Storage {
         updateResume(resume, index);
     }
 
+    protected abstract void updateResume(Resume res, int index);
+
     @Override
     public void save(Resume resume) {
         int index = findIndex(resume.getUuid());
@@ -41,5 +43,12 @@ public abstract class AbstractStorage implements Storage {
         insertNewResume(resume, index);
     }
 
-    protected abstract void updateResume(Resume res, int index);
+    @Override
+    public void delete(String uuid) {
+        int index = findIndex(uuid);
+        if (index < 0) {
+            throw new NotExistStorageException(uuid);
+        }
+        fillDeletedResume(index);
+    }
 }
