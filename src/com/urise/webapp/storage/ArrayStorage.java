@@ -4,7 +4,7 @@ import com.urise.webapp.model.Resume;
 
 public class ArrayStorage extends AbstractArrayStorage {
 
-    protected void addResToStorage(Resume resume, int index) {
+    protected void saveToArray(Resume resume, int index) {
         storage[size] = resume;
     }
 

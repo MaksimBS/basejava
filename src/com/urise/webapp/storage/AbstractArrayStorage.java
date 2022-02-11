@@ -35,13 +35,13 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
         return size;
     }
 
-    protected void insertNewResume(Resume resume, int index) {
+    protected void saveResume(Resume resume, int index) {
         if (size >= STORAGE_LIMIT) {
             throw new StorageException("Storage overflow", resume.getUuid());
         }
-        addResToStorage(resume, index);
+        saveToArray(resume, index);
         size++;
     }
 
-    protected abstract void addResToStorage(Resume resume, int index);
+    protected abstract void saveToArray(Resume resume, int index);
 }
