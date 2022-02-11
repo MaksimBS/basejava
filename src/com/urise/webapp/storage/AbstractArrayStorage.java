@@ -44,4 +44,13 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
     }
 
     protected abstract void saveToArray(Resume resume, int index);
+
+    @Override
+    protected void fillDeletedResume(int index) {
+        deleteFromArray(index);
+        storage[size - 1] = null;
+        size--;
+    }
+
+    protected abstract void deleteFromArray(int index);
 }

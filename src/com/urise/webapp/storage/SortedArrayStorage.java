@@ -24,8 +24,6 @@ public class SortedArrayStorage extends AbstractArrayStorage {
     protected void deleteFromArray(int index) {
         //сдвигаем весь массив в лево на элемент индекса.
         System.arraycopy(storage, index + 1, storage, index, size - 1);
-        storage[size - 1] = null;
-        size--;
     }
 
     @Override

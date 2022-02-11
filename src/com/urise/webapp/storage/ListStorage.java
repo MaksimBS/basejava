@@ -30,7 +30,7 @@ public class ListStorage extends AbstractStorage {
     }
 
     @Override
-    protected void deleteFromArray(int index) {
+    protected void fillDeletedResume(int index) {
         storage.remove(index);
     }
 
