@@ -19,7 +19,7 @@ public abstract class AbstractStorage implements Storage {
 
     protected abstract Resume getByIndex(int index);
 
-    protected abstract void fillDeletedResume(int index);
+    protected abstract void deleteFromArray(int index);
 
     @Override
     public void update(Resume resume) {
@@ -49,6 +49,6 @@ public abstract class AbstractStorage implements Storage {
         if (index < 0) {
             throw new NotExistStorageException(uuid);
         }
-        fillDeletedResume(index);
+        deleteFromArray(index);
     }
 }
