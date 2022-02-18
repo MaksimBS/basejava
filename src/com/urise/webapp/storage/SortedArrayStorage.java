@@ -10,25 +10,20 @@ import java.util.Arrays;
 public class SortedArrayStorage extends AbstractArrayStorage {
 
     @Override
+    protected int findIndex(String uuid) {
+        Resume searchKey = new Resume(uuid);
+        return Arrays.binarySearch(storage, 0, size, searchKey);
+    }
+
+    @Override
     protected void saveToArray(Resume resume, int index) {
         int insertIndex = -index - 1;
         System.arraycopy(storage, insertIndex, storage, insertIndex + 1, size - insertIndex);
         updateResume(resume, insertIndex);
     }
 
-    protected void updateResume(Resume resume, int index) {
-        storage[index] = resume;
-    }
-
     @Override
     protected void deleteFromArray(int index) {
-        //сдвигаем весь массив в лево на элемент индекса.
         System.arraycopy(storage, index + 1, storage, index, size - 1);
-    }
-
-    @Override
-    protected int findIndex(String uuid) {
-        Resume searchKey = new Resume(uuid);
-        return Arrays.binarySearch(storage, 0, size, searchKey);
     }
 }

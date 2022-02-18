@@ -10,8 +10,22 @@ public class ListStorage extends AbstractStorage {
     protected List<Resume> storage = new ArrayList<>();
 
     @Override
-    public Resume getByIndex(int index) {
-        return storage.get(index);
+    protected Object getObject(String uuid) {
+        int index = findIndex(uuid);
+        if (index >= 0) {
+            return storage.get(index);
+        }
+        return null;
+    }
+
+    @Override
+    protected void saveResume(Resume resume) {
+        storage.add(resume);
+    }
+
+    @Override
+    protected Resume getByObject(Object object) {
+        return (Resume) object;
     }
 
     @Override
@@ -20,18 +34,13 @@ public class ListStorage extends AbstractStorage {
         return storage.indexOf(searchKey);
     }
 
-    @Override
-    protected void saveResume(Resume resume, int index) {
-        storage.add(resume);
-    }
-
     protected void updateResume(Resume resume, int index) {
         storage.set(index, resume);
     }
 
     @Override
-    protected void fillDeletedResume(int index) {
-        storage.remove(index);
+    protected void fillDeletedResume(Object object) {
+        storage.remove(object);
     }
 
     @Override

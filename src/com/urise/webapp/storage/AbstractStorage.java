@@ -6,49 +6,55 @@ import com.urise.webapp.model.Resume;
 
 public abstract class AbstractStorage implements Storage {
 
+
+    @Override
+    public void save(Resume resume) {
+        Object object = getObject(resume.getUuid());
+        if (object != null) {
+            throw new ExistStorageException(resume.getUuid());
+        }
+        saveResume(resume);
+    }
+
+    protected abstract Object getObject(String uuid);
+
+    protected abstract void saveResume(Resume res);
+
     @Override
     public Resume get(String uuid) {
-        int index = findIndex(uuid);
-        if (index >= 0) {
-            return getByIndex(index);
+        Object object = getObject(uuid);
+        if (object != null) {
+            return getByObject(object);
         }
         throw new NotExistStorageException(uuid);
     }
 
+    protected abstract Resume getByObject(Object object);
+
+    @Override
+    public void delete(String uuid) {
+        Object object = getObject(uuid);
+        if (object == null) {
+            throw new NotExistStorageException(uuid);
+        }
+        fillDeletedResume(object);
+    }
+
+    protected abstract void fillDeletedResume(Object object);
+
     protected abstract int findIndex(String uuid);
-
-    protected abstract Resume getByIndex(int index);
-
-    protected abstract void fillDeletedResume(int index);
 
     @Override
     public void update(Resume resume) {
-        int index = findIndex(resume.getUuid());
-        if (index < 0) {
+        Object object = getObject(resume.getUuid());
+        if (object == null) {
             throw new NotExistStorageException(resume.getUuid());
         }
+        int index = findIndex(resume.getUuid());
         updateResume(resume, index);
     }
 
     protected abstract void updateResume(Resume resume, int index);
 
-    @Override
-    public void save(Resume resume) {
-        int index = findIndex(resume.getUuid());
-        if (index >= 0) {
-            throw new ExistStorageException(resume.getUuid());
-        }
-        saveResume(resume, index);
-    }
 
-    protected abstract void saveResume(Resume res, int index);
-
-    @Override
-    public void delete(String uuid) {
-        int index = findIndex(uuid);
-        if (index < 0) {
-            throw new NotExistStorageException(uuid);
-        }
-        fillDeletedResume(index);
-    }
 }

@@ -15,15 +15,27 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
     protected int size = 0;
 
     @Override
+    protected void saveResume(Resume resume) {
+        if (size >= STORAGE_LIMIT) {
+            throw new StorageException("Storage overflow", resume.getUuid());
+        }
+        saveToArray(resume, findIndex(resume.getUuid()));
+        size++;
+    }
+
+    protected abstract void saveToArray(Resume resume, int index);
+
+    protected abstract int findIndex(String uuid);
+
+    @Override
     public void clear() {
         Arrays.fill(storage, 0, size, null);
         size = 0;
     }
 
-
     @Override
-    public Resume getByIndex(int index) {
-        return storage[index];
+    public Resume getByObject(Object object) {
+        return (Resume) object;
     }
 
     @Override
@@ -35,22 +47,28 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
         return size;
     }
 
-    protected void saveResume(Resume resume, int index) {
-        if (size >= STORAGE_LIMIT) {
-            throw new StorageException("Storage overflow", resume.getUuid());
+    @Override
+    protected Object getObject(String uuid) {
+        int index = findIndex(uuid);
+        if (index >= 0) {
+            return storage[index];
         }
-        saveToArray(resume, index);
-        size++;
+        return null;
     }
 
-    protected abstract void saveToArray(Resume resume, int index);
-
     @Override
-    protected void fillDeletedResume(int index) {
+    protected void fillDeletedResume(Object object) {
+        Resume  resume = (Resume) object;
+        int index = findIndex(resume.getUuid());
         deleteFromArray(index);
         storage[size - 1] = null;
         size--;
     }
 
     protected abstract void deleteFromArray(int index);
+
+    @Override
+    protected void updateResume(Resume resume, int index) {
+        storage[index] = resume;
+    }
 }
