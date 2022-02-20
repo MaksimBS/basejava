@@ -34,7 +34,7 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
     }
 
     @Override
-    public Resume getByObject(Object object) {
+    public Resume getResume (Object object) {
         return (Resume) object;
     }
 
@@ -57,7 +57,7 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
     }
 
     @Override
-    protected void fillDeletedResume(Object object) {
+    protected void deleteResume (Object object) {
         Resume  resume = (Resume) object;
         int index = findIndex(resume.getUuid());
         deleteFromArray(index);

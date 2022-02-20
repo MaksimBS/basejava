@@ -24,7 +24,7 @@ public class ListStorage extends AbstractStorage {
     }
 
     @Override
-    protected Resume getByObject(Object object) {
+    protected Resume getResume (Object object) {
         return (Resume) object;
     }
 
@@ -39,7 +39,7 @@ public class ListStorage extends AbstractStorage {
     }
 
     @Override
-    protected void fillDeletedResume(Object object) {
+    protected void deleteResume(Object object) {
         storage.remove(object);
     }
 
