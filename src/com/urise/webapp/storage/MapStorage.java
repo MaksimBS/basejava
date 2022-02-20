@@ -15,7 +15,7 @@ public class MapStorage extends AbstractStorage {
     }
 
     @Override
-    protected Object getObject(String uuid) {
+    protected Object getSearchKey(String uuid) {
         Resume findKey = storage.get(uuid);
         return findKey;
     }
