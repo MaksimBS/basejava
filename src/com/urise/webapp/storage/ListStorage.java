@@ -34,8 +34,8 @@ public class ListStorage extends AbstractStorage {
         return storage.indexOf(searchKey);
     }
 
-    protected void updateResume(Resume resume, int index) {
-        storage.set(index, resume);
+    protected void updateResume(Resume resume, Object searchKey) {
+        storage.set(storage.indexOf(searchKey), resume);
     }
 
     @Override

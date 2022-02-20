@@ -16,8 +16,7 @@ public class MapStorage extends AbstractStorage {
 
     @Override
     protected Object getSearchKey(String uuid) {
-        Resume findKey = storage.get(uuid);
-        return findKey;
+        return storage.get(uuid);
     }
 
     @Override
@@ -30,7 +29,7 @@ public class MapStorage extends AbstractStorage {
         return (Resume) object;
     }
 
-    protected void updateResume(Resume resume, int index) {
+    protected void updateResume(Resume resume, Object index) {
         storage.put(resume.getUuid(), resume);
     }
 

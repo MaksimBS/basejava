@@ -49,11 +49,10 @@ public abstract class AbstractStorage implements Storage {
         if (searchKey == null) {
             throw new NotExistStorageException(resume.getUuid());
         }
-        int index = findIndex(resume.getUuid());
-        updateResume(resume, index);
+        updateResume(resume, searchKey);
     }
 
-    protected abstract void updateResume(Resume resume, int index);
+    protected abstract void updateResume(Resume resume, Object searchKey);
 
 
 }
