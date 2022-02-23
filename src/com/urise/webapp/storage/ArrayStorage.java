@@ -5,12 +5,12 @@ import com.urise.webapp.model.Resume;
 public class ArrayStorage extends AbstractArrayStorage {
 
     @Override
-    protected void saveToArray(Resume resume, int index) {
+    protected void saveToArray(Resume resume, Object uuid) {
         storage[size] = resume;
     }
 
     @Override
-    protected int findIndex(String uuid) {
+    protected Object getSearchKey(String uuid) {
         for (int i = 0; i < size; i++) {
             if (storage[i].getUuid().equals(uuid)) {
                 return i;

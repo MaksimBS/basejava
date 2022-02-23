@@ -7,31 +7,21 @@ import java.util.List;
 
 public class ListStorage extends AbstractStorage {
 
-    protected List<Resume> storage = new ArrayList<>();
+    private List<Resume> storage = new ArrayList<>();
 
     @Override
     protected Object getSearchKey(String uuid) {
-        int index = findIndex(uuid);
-        if (index >= 0) {
-            return storage.get(index);
-        }
-        return null;
+        return storage.indexOf(new Resume(uuid));
     }
 
     @Override
-    protected void saveResume(Resume resume) {
+    protected void saveResume(Resume resume, Object uuid) {
         storage.add(resume);
     }
 
     @Override
-    protected Resume getResume (Object object) {
-        return (Resume) object;
-    }
-
-    @Override
-    protected int findIndex(String uuid) {
-        Resume searchKey = new Resume(uuid);
-        return storage.indexOf(searchKey);
+    protected Resume getResume (Object uuid) {
+        return storage.get((int) uuid);
     }
 
     protected void updateResume(Resume resume, Object searchKey) {
@@ -55,5 +45,10 @@ public class ListStorage extends AbstractStorage {
     @Override
     public Resume[] getAll() {
         return storage.toArray(new Resume[0]);
+    }
+
+    @Override
+    protected boolean checkOnExist(Object uuid) {
+        return ((int) uuid >= 0) ? true : false;
     }
 }

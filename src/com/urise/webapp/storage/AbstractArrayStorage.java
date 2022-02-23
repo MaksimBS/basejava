@@ -15,17 +15,15 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
     protected int size = 0;
 
     @Override
-    protected void saveResume(Resume resume) {
+    protected void saveResume(Resume resume, Object uuid) {
         if (size >= STORAGE_LIMIT) {
             throw new StorageException("Storage overflow", resume.getUuid());
         }
-        saveToArray(resume, findIndex(resume.getUuid()));
+        saveToArray(resume, uuid);
         size++;
     }
 
-    protected abstract void saveToArray(Resume resume, int index);
-
-    protected abstract int findIndex(String uuid);
+    protected abstract void saveToArray(Resume resume, Object uuid);
 
     @Override
     public void clear() {
@@ -34,7 +32,7 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
     }
 
     @Override
-    public Resume getResume (Object searchKey) {
+    public Resume getResume(Object searchKey) {
         int index = (int) searchKey;
         return storage[index];
     }
@@ -49,17 +47,8 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
     }
 
     @Override
-    protected Object getSearchKey(String uuid) {
-        int index = findIndex(uuid);
-        if (index >= 0) {
-            return index;
-        }
-        return null;
-    }
-
-    @Override
-    protected void deleteResume (Object indexResume) {
-        int index = (int) indexResume;
+    protected void deleteResume(Object uuid) {
+        int index = (int) uuid;
         deleteFromArray(index);
         storage[size - 1] = null;
         size--;
@@ -68,8 +57,13 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
     protected abstract void deleteFromArray(int index);
 
     @Override
-    protected void updateResume(Resume resume, Object searchKey) {
-        int index = (int) searchKey;
+    protected void updateResume(Resume resume, Object uuid) {
+        int index = (int) uuid;
         storage[index] = resume;
+    }
+
+    @Override
+    protected boolean checkOnExist(Object uuid) {
+        return ((int) uuid >= 0) ? true : false;
     }
 }
