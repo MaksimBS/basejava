@@ -16,7 +16,10 @@ public class MapStorage extends AbstractStorage {
 
     @Override
     protected Object getSearchKey(String uuid) {
-        return storage.get(uuid);
+        if (storage.get(uuid) == null) {
+            return null;
+        }
+        return uuid;
     }
 
     @Override
@@ -25,18 +28,17 @@ public class MapStorage extends AbstractStorage {
     }
 
     @Override
-    protected Resume getResume (Object uuid) {
-        return (Resume) uuid;
+    protected Resume getResume(Object uuid) {
+        return storage.get((String) uuid);
     }
 
     protected void updateResume(Resume resume, Object uuid) {
-        storage.put(resume.getUuid(), resume);
+        storage.put((String) uuid, resume);
     }
 
     @Override
     protected void deleteResume(Object uuid) {
-        Resume searchKey = (Resume) uuid;
-        storage.remove(searchKey.getUuid());
+        storage.remove((String) uuid);
     }
 
     public int size() {
@@ -51,5 +53,4 @@ public class MapStorage extends AbstractStorage {
     protected boolean checkOnExist(Object uuid) {
         return (uuid != null) ? true : false;
     }
-
 }
