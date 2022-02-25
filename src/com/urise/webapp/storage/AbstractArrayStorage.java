@@ -15,15 +15,15 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
     protected int size = 0;
 
     @Override
-    protected void saveResume(Resume resume, Object uuid) {
+    protected void saveResume(Resume resume, Object index) {
         if (size >= STORAGE_LIMIT) {
             throw new StorageException("Storage overflow", resume.getUuid());
         }
-        saveToArray(resume, uuid);
+        saveToArray(resume, (int) index);
         size++;
     }
 
-    protected abstract void saveToArray(Resume resume, Object uuid);
+    protected abstract void saveToArray(Resume resume, int index);
 
     @Override
     public void clear() {
@@ -32,9 +32,8 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
     }
 
     @Override
-    public Resume getResume(Object searchKey) {
-        int index = (int) searchKey;
-        return storage[index];
+    public Resume getResume(Object index) {
+        return storage[(int) index];
     }
 
     @Override
@@ -47,9 +46,8 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
     }
 
     @Override
-    protected void deleteResume(Object uuid) {
-        int index = (int) uuid;
-        deleteFromArray(index);
+    protected void deleteResume(Object index) {
+        deleteFromArray((int) index);
         storage[size - 1] = null;
         size--;
     }
@@ -57,13 +55,12 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
     protected abstract void deleteFromArray(int index);
 
     @Override
-    protected void updateResume(Resume resume, Object uuid) {
-        int index = (int) uuid;
-        storage[index] = resume;
+    protected void updateResume(Resume resume, Object index) {
+        storage[(int) index] = resume;
     }
 
     @Override
-    protected boolean checkOnExist(Object uuid) {
-        return ((int) uuid >= 0) ? true : false;
+    protected boolean isExist(Object uuid) {
+        return (int) uuid >= 0;
     }
 }

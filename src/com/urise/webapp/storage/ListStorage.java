@@ -48,7 +48,7 @@ public class ListStorage extends AbstractStorage {
     }
 
     @Override
-    protected boolean checkOnExist(Object uuid) {
-        return ((int) uuid >= 0) ? true : false;
+    protected boolean isExist(Object uuid) {
+        return (int) uuid >= 0;
     }
 }
