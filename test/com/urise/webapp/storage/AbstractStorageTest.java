@@ -8,6 +8,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.util.Arrays;
+import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertSame;
@@ -16,13 +17,13 @@ import static org.junit.Assert.assertSame;
 public abstract class AbstractStorageTest {
     protected Storage storage;
     public static final String UUID_1 = "uuid1";
-    public static final Resume r1 = new Resume(UUID_1);
+    public static final Resume r1 = new Resume(UUID_1, "Test1");
     public static final String UUID_2 = "uuid2";
-    public static final Resume r2 = new Resume(UUID_2);
+    public static final Resume r2 = new Resume(UUID_2, "Test2");
     public static final String UUID_3 = "uuid3";
-    public static final Resume r3 = new Resume(UUID_3);
+    public static final Resume r3 = new Resume(UUID_3, "Test3");
     public static final String UUID_4 = "uuid4";
-    public static final Resume r4 = new Resume(UUID_4);
+    public static final Resume r4 = new Resume(UUID_4, "Test4");
     public static final String DUMMY = "dummy";
 
     protected AbstractStorageTest(Storage storage) {
@@ -84,22 +85,23 @@ public abstract class AbstractStorageTest {
 
     @Test
     public void getAll() {
-        Resume[] actual = storage.getAll();
-        Resume[] expected = {r1, r2, r3};
-        Arrays.sort(actual);
+        List<Resume> actual = storage.getAllSorted();
+        List<Resume> expected = Arrays.asList(r1, r2, r3);
 
-        assertEquals(3, actual.length);
-        Assert.assertArrayEquals(expected, actual);
+        assertEquals(3, actual.size());
+        Assert.assertEquals(expected, actual);
     }
 
     @Test
     public void update() {
-        storage.update(r1);
-        assertSame(r1, storage.get(UUID_1));
+        Resume resume = new Resume(UUID_1, "OtherTest1");
+        storage.update(resume);
+        assertSame(resume, storage.get(UUID_1));
     }
 
     @Test(expected = NotExistStorageException.class)
     public void updateNotExist() {
-        storage.update(new Resume(DUMMY));
+        Resume resume = new Resume(UUID_4, "OtherTest4");
+        storage.update(resume);
     }
 }

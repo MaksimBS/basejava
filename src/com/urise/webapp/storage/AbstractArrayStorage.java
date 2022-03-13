@@ -4,6 +4,7 @@ import com.urise.webapp.exception.StorageException;
 import com.urise.webapp.model.Resume;
 
 import java.util.Arrays;
+import java.util.List;
 
 /**
  * Array based storage for Resumes
@@ -15,39 +16,39 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
     protected int size = 0;
 
     @Override
-    protected void saveResume(Resume resume, Object index) {
+    protected final void saveResume(Resume resume, Object searchKey) {
         if (size >= STORAGE_LIMIT) {
             throw new StorageException("Storage overflow", resume.getUuid());
         }
-        saveToArray(resume, (int) index);
+        saveToArray(resume, (Integer) searchKey);
         size++;
     }
 
     protected abstract void saveToArray(Resume resume, int index);
 
     @Override
-    public void clear() {
+    public final void clear() {
         Arrays.fill(storage, 0, size, null);
         size = 0;
     }
 
     @Override
-    public Resume getResume(Object index) {
-        return storage[(int) index];
+    protected final Resume getResume(Object index) {
+        return storage[(Integer) index];
     }
 
     @Override
-    public Resume[] getAll() {
-        return Arrays.copyOf(storage, size);
+    public final List<Resume> getAll() {
+        return Arrays.asList(Arrays.copyOfRange(storage, 0, size));
     }
 
-    public int size() {
+    public final int size() {
         return size;
     }
 
     @Override
-    protected void deleteResume(Object index) {
-        deleteFromArray((int) index);
+    protected final void deleteResume(Object searchKey) {
+        deleteFromArray((Integer) searchKey);
         storage[size - 1] = null;
         size--;
     }
@@ -55,12 +56,12 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
     protected abstract void deleteFromArray(int index);
 
     @Override
-    protected void updateResume(Resume resume, Object index) {
-        storage[(int) index] = resume;
+    protected final void updateResume(Resume resume, Object index) {
+        storage[(Integer) index] = resume;
     }
 
     @Override
-    protected boolean isExist(Object uuid) {
-        return (int) uuid >= 0;
+    protected final boolean isExist(Object uuid) {
+        return (Integer) uuid >= 0;
     }
 }
