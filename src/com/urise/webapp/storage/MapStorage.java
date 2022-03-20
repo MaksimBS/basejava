@@ -22,7 +22,7 @@ public class MapStorage extends AbstractStorage {
     }
 
     @Override
-    protected void saveResume(Resume resume, Object uuid) {
+    protected void saveResume(Resume resume, Object searchKey) {
         storage.put(resume.getUuid(), resume);
     }
 
@@ -31,7 +31,7 @@ public class MapStorage extends AbstractStorage {
         return (Resume) searchKey;
     }
 
-    protected void updateResume(Resume resume, Object uuid) {
+    protected void updateResume(Resume resume, Object searchKey) {
         storage.put(resume.getUuid(), resume);
     }
 

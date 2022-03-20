@@ -8,23 +8,23 @@ import java.util.UUID;
  */
 public class Resume implements Comparable<Resume> {
 
-    // Unique identifier
     private final String uuid;
     private String fullName;
+
+    public Resume(String fullName) {
+        this(UUID.randomUUID().toString(), fullName);
+    }
 
     public Resume(String uuid, String fullName) {
         this.uuid = uuid;
         this.fullName = fullName;
     }
 
-    public Resume(String fullName) {
-        this(UUID.randomUUID().toString(), fullName);
-    }
-
     public String getUuid() {
         return uuid;
     }
 
+    @Override
     public int compareTo(Resume p) {
         int tempResult = fullName.compareTo(p.fullName);
         return tempResult == 0 ? uuid.compareTo(p.uuid) : tempResult;
