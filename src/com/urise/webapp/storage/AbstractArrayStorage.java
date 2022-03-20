@@ -9,18 +9,18 @@ import java.util.List;
 /**
  * Array based storage for Resumes
  */
-public abstract class AbstractArrayStorage extends AbstractStorage {
+public abstract class AbstractArrayStorage extends AbstractStorage <Integer> {
     protected static final int STORAGE_LIMIT = 10000;
 
     protected Resume[] storage = new Resume[STORAGE_LIMIT];
     protected int size = 0;
 
     @Override
-    protected final void saveResume(Resume resume, Object searchKey) {
+    protected final void saveResume(Resume resume, Integer searchKey) {
         if (size >= STORAGE_LIMIT) {
             throw new StorageException("Storage overflow", resume.getUuid());
         }
-        saveToArray(resume, (Integer) searchKey);
+        saveToArray(resume, searchKey);
         size++;
     }
 
@@ -33,8 +33,8 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
     }
 
     @Override
-    protected final Resume getResume(Object index) {
-        return storage[(Integer) index];
+    protected final Resume getResume(Integer index) {
+        return storage[index];
     }
 
     @Override
@@ -47,8 +47,8 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
     }
 
     @Override
-    protected final void deleteResume(Object searchKey) {
-        deleteFromArray((Integer) searchKey);
+    protected final void deleteResume(Integer searchKey) {
+        deleteFromArray(searchKey);
         storage[size - 1] = null;
         size--;
     }
@@ -56,12 +56,12 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
     protected abstract void deleteFromArray(int index);
 
     @Override
-    protected final void updateResume(Resume resume, Object index) {
-        storage[(Integer) index] = resume;
+    protected final void updateResume(Resume resume, Integer index) {
+        storage[index] = resume;
     }
 
     @Override
-    protected final boolean isExist(Object uuid) {
-        return (Integer) uuid >= 0;
+    protected final boolean isExist(Integer uuid) {
+        return uuid >= 0;
     }
 }
