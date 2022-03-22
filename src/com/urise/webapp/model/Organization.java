@@ -3,7 +3,7 @@ package com.urise.webapp.model;
 import java.time.LocalDate;
 import java.util.Objects;
 
-public class Organization{
+public class Organization {
 
     private final Link homePage;
     private final LocalDate startDate;
@@ -34,7 +34,6 @@ public class Organization{
         if (!endDate.equals(that.endDate)) return false;
         if (!title.equals(that.title)) return false;
         return Objects.equals(description, that.description);
-
     }
 
     @Override

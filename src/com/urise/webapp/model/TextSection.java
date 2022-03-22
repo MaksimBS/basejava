@@ -3,7 +3,7 @@ package com.urise.webapp.model;
 import java.util.Objects;
 
 public class TextSection extends Section {
-    private String content;
+    private final String content;
 
     public TextSection(String content) {
         Objects.requireNonNull(content, "content must not be null");
@@ -27,7 +27,6 @@ public class TextSection extends Section {
         TextSection that = (TextSection) o;
 
         return content.equals(that.content);
-
     }
 
     @Override

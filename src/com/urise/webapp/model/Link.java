@@ -16,10 +16,6 @@ public class Link {
         return name;
     }
 
-    public String getUrl() {
-        return url;
-    }
-
     @Override
     public String toString() {
         return "Link(" + name + ',' + url + ')';
@@ -34,7 +30,6 @@ public class Link {
 
         if (!name.equals(link.name)) return false;
         return Objects.equals(url, link.url);
-
     }
 
     @Override
