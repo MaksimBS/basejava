@@ -16,7 +16,7 @@ public class ResumeTestData {
         resume1.contacts.put(ContactType.LINKEDIN, "https://www.linkedin.com/in/gkislin");
         resume1.contacts.put(ContactType.GITHUB, "https://github.com/gkislin");
         resume1.contacts.put(ContactType.STATCKOVERFLOW, "https://stackoverflow.com/users/548473");
-        resume1.contacts.put(ContactType.HOME_PAGE, "http://gkislin.ru/");
+        resume1.contacts.put(ContactType.HOME_PAGE, "https://gkislin.ru/");
         //Sections
         resume1.sections.put(SectionType.OBJECTIVE, new TextSection("Ведущий стажировок и корпоративного обучения по Java Web и Enterprise технологиям"));
         resume1.sections.put(SectionType.PERSONAL, new TextSection("Аналитический склад ума, сильная логика, креативность, инициативность. Пурист кода и архитектуры."));
@@ -37,7 +37,7 @@ public class ResumeTestData {
         resume1.sections.put(SectionType.QUALIFICATIONS, new ListSection(itemsQualifications));
 
         ArrayList<Organization> itemsExperience = new ArrayList<>();
-        itemsExperience.add(new Organization("Java Online Projects", "http://javaops.ru/",
+        itemsExperience.add(new Organization("Java Online Projects", "https://javaops.ru/",
                 LocalDate.of(2013, 10, 1), LocalDate.now(), "Автор проекта.", "Создание, организация и проведение Java онлайн проектов и стажировок."));
         itemsExperience.add(new Organization("Wrike", "https://www.wrike.com/",
                 LocalDate.of(2014, 10, 1), LocalDate.of(2016, 1, 1),
@@ -45,9 +45,9 @@ public class ResumeTestData {
         resume1.sections.put(SectionType.EXPERIENCE,new OrganizationSection(itemsExperience));
 
         ArrayList<Organization> itemsEducation = new ArrayList<>();
-        itemsExperience.add(new Organization("Заочная физико-техническая школа при МФТИ", "http://www.school.mipt.ru/",
+        itemsExperience.add(new Organization("Заочная физико-техническая школа при МФТИ", "https://www.school.mipt.ru/",
                 LocalDate.of(1984, 1, 1), LocalDate.of(1987, 6, 1), "Закончил с отличием", ""));
-        itemsExperience.add(new Organization("Санкт-Петербургский национальный исследовательский университет информационных технологий, механики и оптики", "http://www.ifmo.ru/",
+        itemsExperience.add(new Organization("Санкт-Петербургский национальный исследовательский университет информационных технологий, механики и оптики", "https://www.ifmo.ru/",
                 LocalDate.of(1987, 9, 1), LocalDate.of(1993, 7, 1),
                 "Автор проекта.", "Создание, организация и проведение Java онлайн проектов и стажировок."));
 
