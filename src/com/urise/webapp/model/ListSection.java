@@ -3,7 +3,7 @@ package com.urise.webapp.model;
 import java.util.List;
 import java.util.Objects;
 
-public class ListSection extends Section {
+public class ListSection extends Section<List<String>> {
     private final List<String> items;
 
     public ListSection(List<String> items) {
@@ -14,6 +14,11 @@ public class ListSection extends Section {
     @Override
     public String toString() {
         return items.toString();
+    }
+
+    @Override
+    public List<String> getInfo() {
+        return items;
     }
 
     @Override

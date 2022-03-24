@@ -4,6 +4,7 @@ import com.urise.webapp.model.*;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.List;
 
 public class ResumeTestData {
 
@@ -45,15 +46,35 @@ public class ResumeTestData {
         resume1.sections.put(SectionType.EXPERIENCE,new OrganizationSection(itemsExperience));
 
         ArrayList<Organization> itemsEducation = new ArrayList<>();
-        itemsExperience.add(new Organization("Заочная физико-техническая школа при МФТИ", "https://www.school.mipt.ru/",
+        itemsEducation.add(new Organization("Заочная физико-техническая школа при МФТИ", "https://www.school.mipt.ru/",
                 LocalDate.of(1984, 1, 1), LocalDate.of(1987, 6, 1), "Закончил с отличием", ""));
-        itemsExperience.add(new Organization("Санкт-Петербургский национальный исследовательский университет информационных технологий, механики и оптики", "https://www.ifmo.ru/",
+        itemsEducation.add(new Organization("Санкт-Петербургский национальный исследовательский университет информационных технологий, механики и оптики", "https://www.ifmo.ru/",
                 LocalDate.of(1987, 9, 1), LocalDate.of(1993, 7, 1),
                 "Автор проекта.", "Создание, организация и проведение Java онлайн проектов и стажировок."));
 
         resume1.sections.put(SectionType.EDUCATION,new OrganizationSection(itemsEducation));
 
-        System.out.println(resume1);
 
+        System.out.println("Контактная информация:");
+        //вывести информацию
+        for (ContactType key : resume1.contacts.keySet()) {
+            System.out.println(key.getTitle() + ": " +  resume1.contacts.get(key));
+        }
+        System.out.println();
+
+        for (SectionType key : resume1.sections.keySet()) {
+            System.out.println(key.getTitle() + ": ");
+            Section section = resume1.sections.get(key);
+
+            switch (key) {
+                case OBJECTIVE, PERSONAL -> System.out.println(section.toString());
+                default -> {
+                    List<Object> listSection = (List) section.getInfo();
+                    for (Object items : listSection) {
+                        System.out.println(items.toString());
+                    }
+                }
+            }
+        }
     }
 }

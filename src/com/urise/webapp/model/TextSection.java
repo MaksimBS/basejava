@@ -2,7 +2,7 @@ package com.urise.webapp.model;
 
 import java.util.Objects;
 
-public class TextSection extends Section {
+public class TextSection extends Section<String> {
     private final String content;
 
     public TextSection(String content) {
@@ -16,6 +16,11 @@ public class TextSection extends Section {
 
     @Override
     public String toString() {
+        return content;
+    }
+
+    @Override
+    public String getInfo() {
         return content;
     }
 
