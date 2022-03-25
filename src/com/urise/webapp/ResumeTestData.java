@@ -1,8 +1,8 @@
 package com.urise.webapp;
 
 import com.urise.webapp.model.*;
+import com.urise.webapp.util.DataUtil;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -39,17 +39,17 @@ public class ResumeTestData {
 
         ArrayList<Organization> itemsExperience = new ArrayList<>();
         itemsExperience.add(new Organization("Java Online Projects", "https://javaops.ru/",
-                LocalDate.of(2013, 10, 1), LocalDate.now(), "Автор проекта.", "Создание, организация и проведение Java онлайн проектов и стажировок."));
+                DataUtil.of(2013,10), DataUtil.of(), "Автор проекта.", "Создание, организация и проведение Java онлайн проектов и стажировок."));
         itemsExperience.add(new Organization("Wrike", "https://www.wrike.com/",
-                LocalDate.of(2014, 10, 1), LocalDate.of(2016, 1, 1),
+                DataUtil.of(2014, 10), DataUtil.of(2016, 1),
                 "Автор проекта.", "Создание, организация и проведение Java онлайн проектов и стажировок."));
         resume1.sections.put(SectionType.EXPERIENCE,new OrganizationSection(itemsExperience));
 
         ArrayList<Organization> itemsEducation = new ArrayList<>();
         itemsEducation.add(new Organization("Заочная физико-техническая школа при МФТИ", "https://www.school.mipt.ru/",
-                LocalDate.of(1984, 1, 1), LocalDate.of(1987, 6, 1), "Закончил с отличием", ""));
+                DataUtil.of(1984, 1), DataUtil.of(1987, 6), "Закончил с отличием", ""));
         itemsEducation.add(new Organization("Санкт-Петербургский национальный исследовательский университет информационных технологий, механики и оптики", "https://www.ifmo.ru/",
-                LocalDate.of(1987, 9, 1), LocalDate.of(1993, 7, 1),
+                DataUtil.of(1987, 9), DataUtil.of(1993, 7),
                 "Автор проекта.", "Создание, организация и проведение Java онлайн проектов и стажировок."));
 
         resume1.sections.put(SectionType.EDUCATION,new OrganizationSection(itemsEducation));
