@@ -3,12 +3,13 @@ package com.urise.webapp.storage;
 import com.urise.webapp.exception.StorageException;
 import com.urise.webapp.model.Resume;
 
-import java.io.File;
-import java.io.IOException;
+import java.io.*;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 
-public abstract class AbstractFileStorage extends AbstractStorage<File> {
+public class AbstractFileStorage<F> extends AbstractStorage<File> {
     private File directory;
 
     protected AbstractFileStorage(File directory) {
@@ -24,12 +25,26 @@ public abstract class AbstractFileStorage extends AbstractStorage<File> {
 
     @Override
     public void clear() {
+        File[] files = directory.listFiles();
+        if (files != null) {
+            for (File file : files) {
+                deleteResume(file);
+            }
+        }
+    }
 
+    @Override
+    protected void deleteResume(File file) {
+        file.delete();
     }
 
     @Override
     public int size() {
-        return 0;
+        String[] list = directory.list();
+        if (list == null) {
+            throw new StorageException("Directory read error", null);
+        }
+        return list.length;
     }
 
     @Override
@@ -38,19 +53,71 @@ public abstract class AbstractFileStorage extends AbstractStorage<File> {
     }
 
     @Override
+    protected void updateResume(Resume resume, File file) {
+        try {
+            writeFile(resume, file);
+        } catch (IOException e) {
+            throw new StorageException("File write error", resume.getUuid(), e);
+        }
+    }
+
+    @Override
     protected boolean isExist(File file) {
         return file.exists();
     }
 
     @Override
-    protected void saveResume(Resume r, File file) {
+    protected void saveResume(Resume resume, File file) {
         try {
             file.createNewFile();
-            doWrite(r, file);
+            writeFile(resume, file);
         } catch (IOException e) {
             throw new StorageException("IO error", file.getName(), e);
         }
     }
 
-    protected abstract void doWrite(Resume r, File file) throws IOException;
+    @Override
+    protected Resume getResume(File file) {
+        //создание резюме из файла.
+        //пока создаю для теста.
+        return readFile(file);
+    }
+
+    @Override
+    protected List<Resume> getAll() {
+        List<Resume> resumes = new ArrayList<>();
+        File[] files = directory.listFiles();
+        if (files != null) {
+            for (File file : files) {
+                resumes.add(getResume(file));
+            }
+        }
+        return resumes;
+    }
+
+
+// дальше для теста, в дальнейшем переделаю.
+    protected void writeFile(Resume resume, File file) throws IOException {
+        //тестовое заполнение файла.
+        FileWriter writer = new FileWriter(file);
+        writer.write(resume.getFullName());
+        writer.close();
+    }
+
+    protected Resume readFile(File file) {
+        String fullName = "";
+        try {
+            FileReader testFile = new FileReader(file);
+            BufferedReader reader = new BufferedReader(testFile);
+            fullName = reader.readLine();
+            reader.close();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return new Resume(file.getName(),fullName);
+    }
+
+
 }
