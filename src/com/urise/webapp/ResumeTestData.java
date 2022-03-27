@@ -45,12 +45,18 @@ public class ResumeTestData {
                 "Автор проекта.", "Создание, организация и проведение Java онлайн проектов и стажировок."));
         resume.sections.put(SectionType.EXPERIENCE,new OrganizationSection(itemsExperience));
 
+
         ArrayList<Organization> itemsEducation = new ArrayList<>();
-        itemsEducation.add(new Organization("Заочная физико-техническая школа при МФТИ", "https://www.school.mipt.ru/",
-                DataUtil.of(1984, 1), DataUtil.of(1987, 6), "Закончил с отличием", ""));
-        itemsEducation.add(new Organization("Санкт-Петербургский национальный исследовательский университет информационных технологий, механики и оптики", "https://www.ifmo.ru/",
-                DataUtil.of(1987, 9), DataUtil.of(1993, 7),
-                "Автор проекта.", "Создание, организация и проведение Java онлайн проектов и стажировок."));
+
+        Organization Organization = new Organization("Заочная физико-техническая школа при МФТИ", "https://www.school.mipt.ru/");
+        Organization.setPosition(DataUtil.of(1984, 1), DataUtil.of(1987, 6), "Обучение 1", "Описание 1");
+        Organization.setPosition(DataUtil.of(1987, 6), DataUtil.of(1990, 1), "Обучение 2", "Описание 2");
+        itemsEducation.add(Organization);
+
+        Organization = new Organization("Санкт-Петербургский национальный исследовательский университет информационных технологий, механики и оптики","http://www.ifmo.ru/");
+        Organization.setPosition(DataUtil.of(1993, 9), DataUtil.of(1996, 7), "Аспирантура (программист С, С++)", "");
+        Organization.setPosition(DataUtil.of(1987, 9), DataUtil.of(1993, 7), "Инженер (программист Fortran, C)", "");
+        itemsEducation.add(Organization);
 
         resume.sections.put(SectionType.EDUCATION,new OrganizationSection(itemsEducation));
 
@@ -64,7 +70,7 @@ public class ResumeTestData {
         System.out.println("Контактная информация:");
         //вывести информацию
         for (ContactType key : resume1.contacts.keySet()) {
-            System.out.println(key.getTitle() + ": " +  resume1.contacts.get(key));
+            System.out.println('\t'+ key.getTitle() + ": " +  resume1.contacts.get(key));
         }
         System.out.println();
 
@@ -73,11 +79,20 @@ public class ResumeTestData {
             Section section = resume1.sections.get(key);
 
             switch (key) {
-                case OBJECTIVE, PERSONAL -> System.out.println(section.toString());
+                case OBJECTIVE, PERSONAL -> System.out.println('\t' + section.toString());
+                case EDUCATION, EXPERIENCE -> {
+                    List<Organization> listSection = (List) section.getInfo();
+                    for (Organization items : listSection) {
+                        System.out.println('\t' + items.toString());
+                        for (Object position : items.getPosition()) {
+                            System.out.println("        " + position.toString());
+                        }
+                    }
+                }
                 default -> {
                     List<Object> listSection = (List) section.getInfo();
                     for (Object items : listSection) {
-                        System.out.println(items.toString());
+                        System.out.println('\t' + items.toString());
                     }
                 }
             }
