@@ -106,6 +106,20 @@ public class AbstractFileStorage<F> extends AbstractStorage<File> {
 
     protected Resume readFile(File file) {
         String fullName = "";
+
+        try (FileReader testFile = new FileReader(file)) {
+            try (BufferedReader reader = new BufferedReader(testFile)) {
+                fullName = reader.readLine();
+                //reader.close();
+            }
+
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return new Resume(file.getName(),fullName);
+        /*
         try {
             FileReader testFile = new FileReader(file);
             BufferedReader reader = new BufferedReader(testFile);
@@ -117,6 +131,7 @@ public class AbstractFileStorage<F> extends AbstractStorage<File> {
             e.printStackTrace();
         }
         return new Resume(file.getName(),fullName);
+         */
     }
 
 
