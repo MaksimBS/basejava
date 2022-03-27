@@ -54,11 +54,7 @@ public class AbstractFileStorage<F> extends AbstractStorage<File> {
 
     @Override
     protected void updateResume(Resume resume, File file) {
-        try {
-            writeFile(resume, file);
-        } catch (IOException e) {
-            throw new StorageException("File write error", resume.getUuid(), e);
-        }
+        writeFile(resume, file);
     }
 
     @Override
@@ -97,11 +93,13 @@ public class AbstractFileStorage<F> extends AbstractStorage<File> {
 
 
 // дальше для теста, в дальнейшем переделаю.
-    protected void writeFile(Resume resume, File file) throws IOException {
+    protected void writeFile(Resume resume, File file) {
         //тестовое заполнение файла.
-        FileWriter writer = new FileWriter(file);
-        writer.write(resume.getFullName());
-        writer.close();
+        try (FileWriter writer = new FileWriter(file)) {
+            writer.write(resume.getFullName());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     protected Resume readFile(File file) {
