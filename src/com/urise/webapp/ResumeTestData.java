@@ -8,7 +8,7 @@ import java.util.List;
 
 public class ResumeTestData {
 
-    public static Resume newResume (String uuid, String fullName) {
+    public static Resume newResume(String uuid, String fullName) {
         Resume resume = new Resume(uuid, fullName);
         // contacts
         resume.contacts.put(ContactType.PHONE, "+7(921) 855-0482");
@@ -39,11 +39,11 @@ public class ResumeTestData {
 
         ArrayList<Organization> itemsExperience = new ArrayList<>();
         itemsExperience.add(new Organization("Java Online Projects", "https://javaops.ru/",
-                DataUtil.of(2013,10), DataUtil.of(), "Автор проекта.", "Создание, организация и проведение Java онлайн проектов и стажировок."));
+                DataUtil.of(2013, 10), DataUtil.of(), "Автор проекта.", "Создание, организация и проведение Java онлайн проектов и стажировок."));
         itemsExperience.add(new Organization("Wrike", "https://www.wrike.com/",
                 DataUtil.of(2014, 10), DataUtil.of(2016, 1),
                 "Автор проекта.", "Создание, организация и проведение Java онлайн проектов и стажировок."));
-        resume.sections.put(SectionType.EXPERIENCE,new OrganizationSection(itemsExperience));
+        resume.sections.put(SectionType.EXPERIENCE, new OrganizationSection(itemsExperience));
 
 
         ArrayList<Organization> itemsEducation = new ArrayList<>();
@@ -53,12 +53,12 @@ public class ResumeTestData {
         Organization.setPosition(DataUtil.of(1987, 6), DataUtil.of(1990, 1), "Обучение 2", "Описание 2");
         itemsEducation.add(Organization);
 
-        Organization = new Organization("Санкт-Петербургский национальный исследовательский университет информационных технологий, механики и оптики","http://www.ifmo.ru/");
+        Organization = new Organization("Санкт-Петербургский национальный исследовательский университет информационных технологий, механики и оптики", "http://www.ifmo.ru/");
         Organization.setPosition(DataUtil.of(1993, 9), DataUtil.of(1996, 7), "Аспирантура (программист С, С++)", "");
         Organization.setPosition(DataUtil.of(1987, 9), DataUtil.of(1993, 7), "Инженер (программист Fortran, C)", "");
         itemsEducation.add(Organization);
 
-        resume.sections.put(SectionType.EDUCATION,new OrganizationSection(itemsEducation));
+        resume.sections.put(SectionType.EDUCATION, new OrganizationSection(itemsEducation));
 
         return resume;
     }
@@ -70,19 +70,19 @@ public class ResumeTestData {
         System.out.println("Контактная информация:");
         //вывести информацию
         for (ContactType key : resume1.contacts.keySet()) {
-            System.out.println('\t'+ key.getTitle() + ": " +  resume1.contacts.get(key));
+            System.out.println('\t' + key.getTitle() + ": " + resume1.contacts.get(key));
         }
         System.out.println();
 
         for (SectionType key : resume1.sections.keySet()) {
             System.out.println(key.getTitle() + ": ");
-            Section section = resume1.sections.get(key);
+            AbstractSection<List> section = resume1.sections.get(key);
 
             switch (key) {
                 case OBJECTIVE, PERSONAL -> System.out.println('\t' + section.toString());
                 case EDUCATION, EXPERIENCE -> {
-                    List<Organization> listSection = (List) section.getInfo();
-                    for (Organization items : listSection) {
+                    List<Organization> listOrganization = section.getInfo();
+                    for (Organization items : listOrganization) {
                         System.out.println('\t' + items.toString());
                         for (Object position : items.getPosition()) {
                             System.out.println("        " + position.toString());
@@ -90,7 +90,7 @@ public class ResumeTestData {
                     }
                 }
                 default -> {
-                    List<Object> listSection = (List) section.getInfo();
+                    List<String> listSection = section.getInfo();
                     for (Object items : listSection) {
                         System.out.println('\t' + items.toString());
                     }

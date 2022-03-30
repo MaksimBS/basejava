@@ -17,9 +17,9 @@ public class DataUtil {
         return LocalDate.of(year, Month.of(month), 1);
     }
 
-    public static String toDateResume (LocalDate date) {
+    public static String toDateResume(LocalDate date) {
         //  01/2005
-        String prefix = date.getMonth().getValue() < 10 ? "0":"";
+        String prefix = date.getMonth().getValue() < 10 ? "0" : "";
         return " " + prefix + date.getMonth().getValue() + "/" + date.getYear() + " ";
     }
 }

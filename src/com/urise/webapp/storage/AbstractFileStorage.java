@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Objects;
 
 
-public class AbstractFileStorage<F> extends AbstractStorage<File> {
+public abstract class AbstractFileStorage<F> extends AbstractStorage<File> {
     private File directory;
 
     protected AbstractFileStorage(File directory) {
@@ -35,7 +35,9 @@ public class AbstractFileStorage<F> extends AbstractStorage<File> {
 
     @Override
     protected void deleteResume(File file) {
-        file.delete();
+        if (!file.delete()) {
+            throw new StorageException("Failed to delete the file", null);
+        }
     }
 
     @Override
@@ -91,8 +93,7 @@ public class AbstractFileStorage<F> extends AbstractStorage<File> {
         return resumes;
     }
 
-
-// дальше для теста, в дальнейшем переделаю.
+    // дальше для теста, в дальнейшем переделаю.
     protected void writeFile(Resume resume, File file) {
         //тестовое заполнение файла.
         try (FileWriter writer = new FileWriter(file)) {
@@ -111,12 +112,10 @@ public class AbstractFileStorage<F> extends AbstractStorage<File> {
                 //reader.close();
             }
 
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return new Resume(file.getName(),fullName);
+        return new Resume(file.getName(), fullName);
         /*
         try {
             FileReader testFile = new FileReader(file);
