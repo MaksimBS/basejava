@@ -85,7 +85,9 @@ public class Organization {
 
         @Override
         public String toString() {
-            return DataUtil.toDateResume(startDate) + "-" + DataUtil.toDateResume(endDate) + title + " " + description;
+            String strEndDate = endDate.isBefore(LocalDate.now())?DataUtil.toDateResume(endDate):" /по н.в./ ";
+
+            return DataUtil.toDateResume(startDate) + "-" + strEndDate + title + " " + description;
         }
     }
 }

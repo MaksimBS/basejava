@@ -54,7 +54,7 @@ public class ResumeTestData {
         itemsEducation.add(Organization);
 
         Organization = new Organization("Санкт-Петербургский национальный исследовательский университет информационных технологий, механики и оптики", "http://www.ifmo.ru/");
-        Organization.setPosition(DataUtil.of(1993, 9), DataUtil.of(1996, 7), "Аспирантура (программист С, С++)", "");
+        Organization.setPosition(DataUtil.of(1993, 9), DataUtil.NOW, "Аспирантура (программист С, С++)", "");
         Organization.setPosition(DataUtil.of(1987, 9), DataUtil.of(1993, 7), "Инженер (программист Fortran, C)", "");
         itemsEducation.add(Organization);
 
