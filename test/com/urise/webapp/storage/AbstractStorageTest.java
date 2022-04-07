@@ -15,6 +15,7 @@ import static org.junit.Assert.assertEquals;
 
 
 public abstract class AbstractStorageTest {
+    protected static final String STORAGE_DIR = "C:/Java/testStorage";
     protected Storage storage;
     public static final String UUID_1 = "uuid1";
     public static final Resume r1 = ResumeTestData.newResume(UUID_1, "Test1");

@@ -2,12 +2,13 @@ package com.urise.webapp.model;
 
 import com.urise.webapp.util.DataUtil;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class Organization {
+public class Organization implements Serializable {
 
     private final Link homePage;
     private List<Position> positions;
@@ -56,7 +57,7 @@ public class Organization {
     }
 
 
-    class Position {
+    class Position implements Serializable {
 
         private final LocalDate startDate;
         private final LocalDate endDate;

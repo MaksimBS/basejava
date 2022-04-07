@@ -10,7 +10,7 @@ import java.util.Objects;
 
 
 public abstract class AbstractFileStorage<F> extends AbstractStorage<File> {
-    private File directory;
+    private final File directory;
 
     protected AbstractFileStorage(File directory) {
         Objects.requireNonNull(directory, "directory must not be null");
@@ -36,7 +36,7 @@ public abstract class AbstractFileStorage<F> extends AbstractStorage<File> {
     @Override
     protected void deleteResume(File file) {
         if (!file.delete()) {
-            throw new StorageException("Failed to delete the file", null);
+            throw new StorageException("Failed to delete the file", file.getName());
         }
     }
 
@@ -56,8 +56,14 @@ public abstract class AbstractFileStorage<F> extends AbstractStorage<File> {
 
     @Override
     protected void updateResume(Resume resume, File file) {
-        writeFile(resume, file);
+        try {
+            doWrite(resume, new BufferedOutputStream(new FileOutputStream(file)));
+        } catch (IOException e) {
+            throw new StorageException("File write error", resume.getUuid(), e);
+        }
     }
+
+    abstract protected void doWrite(Resume resume, OutputStream os) throws IOException;
 
     @Override
     protected boolean isExist(File file) {
@@ -68,18 +74,22 @@ public abstract class AbstractFileStorage<F> extends AbstractStorage<File> {
     protected void saveResume(Resume resume, File file) {
         try {
             file.createNewFile();
-            writeFile(resume, file);
+            doWrite(resume, new BufferedOutputStream(new FileOutputStream(file)));
         } catch (IOException e) {
-            throw new StorageException("IO error", file.getName(), e);
+            throw new StorageException("File write error", file.getName(), e);
         }
     }
 
     @Override
     protected Resume getResume(File file) {
-        //создание резюме из файла.
-        //пока создаю для теста.
-        return readFile(file);
+        try {
+            return doRead(new BufferedInputStream(new FileInputStream(file)));
+        } catch (IOException | ClassNotFoundException e) {
+            throw new StorageException("File read error", file.getName(), e);
+        }
     }
+
+    abstract protected Resume doRead(InputStream is) throws IOException, ClassNotFoundException;
 
     @Override
     protected List<Resume> getAll() {
@@ -92,44 +102,4 @@ public abstract class AbstractFileStorage<F> extends AbstractStorage<File> {
         }
         return resumes;
     }
-
-    // дальше для теста, в дальнейшем переделаю.
-    protected void writeFile(Resume resume, File file) {
-        //тестовое заполнение файла.
-        try (FileWriter writer = new FileWriter(file)) {
-            writer.write(resume.getFullName());
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    protected Resume readFile(File file) {
-        String fullName = "";
-
-        try (FileReader testFile = new FileReader(file)) {
-            try (BufferedReader reader = new BufferedReader(testFile)) {
-                fullName = reader.readLine();
-                //reader.close();
-            }
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return new Resume(file.getName(), fullName);
-        /*
-        try {
-            FileReader testFile = new FileReader(file);
-            BufferedReader reader = new BufferedReader(testFile);
-            fullName = reader.readLine();
-            reader.close();
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return new Resume(file.getName(),fullName);
-         */
-    }
-
-
 }
