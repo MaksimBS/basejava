@@ -11,16 +11,16 @@ public class ResumeTestData {
     public static Resume newResume(String uuid, String fullName) {
         Resume resume = new Resume(uuid, fullName);
         // contacts
-        resume.contacts.put(ContactType.PHONE, "+7(921) 855-0482");
-        resume.contacts.put(ContactType.SKYPE, "grigory.kislin");
-        resume.contacts.put(ContactType.MAIL, "gkislin@yandex.ru");
-        resume.contacts.put(ContactType.LINKEDIN, "https://www.linkedin.com/in/gkislin");
-        resume.contacts.put(ContactType.GITHUB, "https://github.com/gkislin");
-        resume.contacts.put(ContactType.STATCKOVERFLOW, "https://stackoverflow.com/users/548473");
-        resume.contacts.put(ContactType.HOME_PAGE, "https://gkislin.ru/");
+        resume.setContacts(ContactType.PHONE, "+7(921) 855-0482");
+        resume.setContacts(ContactType.SKYPE, "grigory.kislin");
+        resume.setContacts(ContactType.MAIL, "gkislin@yandex.ru");
+        resume.setContacts(ContactType.LINKEDIN, "https://www.linkedin.com/in/gkislin");
+        resume.setContacts(ContactType.GITHUB, "https://github.com/gkislin");
+        resume.setContacts(ContactType.STATCKOVERFLOW, "https://stackoverflow.com/users/548473");
+        resume.setContacts(ContactType.HOME_PAGE, "https://gkislin.ru/");
         //Sections
-        resume.sections.put(SectionType.OBJECTIVE, new TextSection("Ведущий стажировок и корпоративного обучения по Java Web и Enterprise технологиям"));
-        resume.sections.put(SectionType.PERSONAL, new TextSection("Аналитический склад ума, сильная логика, креативность, инициативность. Пурист кода и архитектуры."));
+        resume.setSection(SectionType.OBJECTIVE, new TextSection("Ведущий стажировок и корпоративного обучения по Java Web и Enterprise технологиям"));
+        resume.setSection(SectionType.PERSONAL, new TextSection("Аналитический склад ума, сильная логика, креативность, инициативность. Пурист кода и архитектуры."));
 
         ArrayList<String> itemsAchievement = new ArrayList<>();
         itemsAchievement.add("С 2013 года: разработка проектов 'Разработка Web приложения','Java Enterprise', " +
@@ -29,13 +29,13 @@ public class ResumeTestData {
                 "Более 1000 выпускников.");
         itemsAchievement.add("Реализация двухфакторной аутентификации для онлайн платформы управления проектами Wrike. " +
                 "Интеграция с Twilio, DuoSecurity, Google Authenticator, Jira, Zendesk.");
-        resume.sections.put(SectionType.ACHIEVEMENT, new ListSection(itemsAchievement));
+        resume.setSection(SectionType.ACHIEVEMENT, new ListSection(itemsAchievement));
 
         ArrayList<String> itemsQualifications = new ArrayList<>();
         itemsQualifications.add("JEE AS: GlassFish (v2.1, v3), OC4J, JBoss, Tomcat, Jetty, WebLogic, WSO2");
         itemsQualifications.add("Version control: Subversion, Git, Mercury, ClearCase, Perforce");
         itemsQualifications.add("DB: PostgreSQL(наследование, pgplsql, PL/Python), Redis (Jedis), H2, Oracle");
-        resume.sections.put(SectionType.QUALIFICATIONS, new ListSection(itemsQualifications));
+        resume.setSection(SectionType.QUALIFICATIONS, new ListSection(itemsQualifications));
 
         ArrayList<Organization> itemsExperience = new ArrayList<>();
         itemsExperience.add(new Organization("Java Online Projects", "https://javaops.ru/",
@@ -43,7 +43,7 @@ public class ResumeTestData {
         itemsExperience.add(new Organization("Wrike", "https://www.wrike.com/",
                 DataUtil.of(2014, 10), DataUtil.of(2016, 1),
                 "Автор проекта.", "Создание, организация и проведение Java онлайн проектов и стажировок."));
-        resume.sections.put(SectionType.EXPERIENCE, new OrganizationSection(itemsExperience));
+        resume.setSection(SectionType.EXPERIENCE, new OrganizationSection(itemsExperience));
 
 
         ArrayList<Organization> itemsEducation = new ArrayList<>();
@@ -58,7 +58,7 @@ public class ResumeTestData {
         Organization.setPosition(DataUtil.of(1987, 9), DataUtil.of(1993, 7), "Инженер (программист Fortran, C)", "");
         itemsEducation.add(Organization);
 
-        resume.sections.put(SectionType.EDUCATION, new OrganizationSection(itemsEducation));
+        resume.setSection(SectionType.EDUCATION, new OrganizationSection(itemsEducation));
 
         return resume;
     }
@@ -69,14 +69,14 @@ public class ResumeTestData {
 
         System.out.println("Контактная информация:");
         //вывести информацию
-        for (ContactType key : resume1.contacts.keySet()) {
-            System.out.println('\t' + key.getTitle() + ": " + resume1.contacts.get(key));
+        for (ContactType key : resume1.getContacts().keySet()) {
+            System.out.println('\t' + key.getTitle() + ": " + resume1.getContacts().get(key));
         }
         System.out.println();
 
-        for (SectionType key : resume1.sections.keySet()) {
+        for (SectionType key : resume1.getSections().keySet()) {
             System.out.println(key.getTitle() + ": ");
-            AbstractSection<List> section = resume1.sections.get(key);
+            AbstractSection<List> section = resume1.getSections().get(key);
 
             switch (key) {
                 case OBJECTIVE, PERSONAL -> System.out.println('\t' + section.toString());
