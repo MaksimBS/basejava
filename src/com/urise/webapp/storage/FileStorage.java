@@ -9,10 +9,12 @@ import java.util.List;
 import java.util.Objects;
 
 
-public abstract class AbstractFileStorage<F> extends AbstractStorage<File> {
+public class FileStorage<F> extends AbstractStorage<File> {
     private final File directory;
 
-    protected AbstractFileStorage(File directory) {
+    private ObjectStreamInOut stream;
+
+    protected FileStorage(File directory) {
         Objects.requireNonNull(directory, "directory must not be null");
         if (!directory.isDirectory()) {
             throw new IllegalArgumentException(directory.getAbsolutePath() + " is not directory");
@@ -20,6 +22,7 @@ public abstract class AbstractFileStorage<F> extends AbstractStorage<File> {
         if (!directory.canRead() || !directory.canWrite()) {
             throw new IllegalArgumentException(directory.getAbsolutePath() + " is not readable/writable");
         }
+        this.stream = new ObjectStreamInOut();
         this.directory = directory;
     }
 
@@ -57,13 +60,11 @@ public abstract class AbstractFileStorage<F> extends AbstractStorage<File> {
     @Override
     protected void updateResume(Resume resume, File file) {
         try {
-            doWrite(resume, new BufferedOutputStream(new FileOutputStream(file)));
+            stream.doWrite(resume, new BufferedOutputStream(new FileOutputStream(file)));
         } catch (IOException e) {
             throw new StorageException("File write error", resume.getUuid(), e);
         }
     }
-
-    abstract protected void doWrite(Resume resume, OutputStream os) throws IOException;
 
     @Override
     protected boolean isExist(File file) {
@@ -74,7 +75,7 @@ public abstract class AbstractFileStorage<F> extends AbstractStorage<File> {
     protected void saveResume(Resume resume, File file) {
         try {
             file.createNewFile();
-            doWrite(resume, new BufferedOutputStream(new FileOutputStream(file)));
+            stream.doWrite(resume, new BufferedOutputStream(new FileOutputStream(file)));
         } catch (IOException e) {
             throw new StorageException("File write error", file.getName(), e);
         }
@@ -83,13 +84,11 @@ public abstract class AbstractFileStorage<F> extends AbstractStorage<File> {
     @Override
     protected Resume getResume(File file) {
         try {
-            return doRead(new BufferedInputStream(new FileInputStream(file)));
-        } catch (IOException | ClassNotFoundException e) {
+            return stream.doRead(new BufferedInputStream(new FileInputStream(file)));
+        } catch (IOException e) {
             throw new StorageException("File read error", file.getName(), e);
         }
     }
-
-    abstract protected Resume doRead(InputStream is) throws IOException, ClassNotFoundException;
 
     @Override
     protected List<Resume> getAll() {

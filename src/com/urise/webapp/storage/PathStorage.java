@@ -12,15 +12,17 @@ import java.util.List;
 import java.util.Objects;
 
 
-public abstract class AbstractPathStorage<F> extends AbstractStorage<Path> {
+public class PathStorage<F> extends AbstractStorage<Path> {
     private final Path directory;
+    private ObjectStreamInOut stream;
 
-    protected AbstractPathStorage(String dir) {
+    protected PathStorage(String dir) {
         directory = Paths.get(dir);
         Objects.requireNonNull(directory, "directory must not be null");
         if (!Files.isDirectory(directory) || !Files.isWritable(directory)) {
             throw new IllegalArgumentException(dir + " is not directory or is not writable");
         }
+        this.stream = new ObjectStreamInOut();
     }
 
     @Override
@@ -58,19 +60,18 @@ public abstract class AbstractPathStorage<F> extends AbstractStorage<Path> {
     @Override
     protected void updateResume(Resume resume, Path path) {
         try {
-            doWrite(resume, new BufferedOutputStream(new FileOutputStream(String.valueOf(path.getFileName()))));
+            stream.doWrite(resume, new BufferedOutputStream(Files.newOutputStream(path)));
         } catch (IOException e) {
             throw new StorageException("File write error", resume.getUuid(), e);
         }
     }
 
-    abstract protected void doWrite(Resume resume, OutputStream os) throws IOException;
 
     @Override
     protected void saveResume(Resume resume, Path path) {
         try {
             Files.createFile(path);
-            doWrite(resume, new BufferedOutputStream(new FileOutputStream(String.valueOf(path.getFileName()))));
+            updateResume(resume, path);
         } catch (IOException e) {
             throw new StorageException("File write error", path.getFileName().toString(), e);
         }
@@ -79,8 +80,8 @@ public abstract class AbstractPathStorage<F> extends AbstractStorage<Path> {
     @Override
     protected Resume getResume(Path path) {
         try {
-            return doRead(new BufferedInputStream(new FileInputStream(String.valueOf(path.getFileName()))));
-        } catch (IOException | ClassNotFoundException e) {
+            return stream.doRead(new BufferedInputStream(new FileInputStream(String.valueOf(path.getFileName()))));
+        } catch (IOException e) {
             throw new StorageException("File read error", path.getFileName().toString(), e);
         }
     }
@@ -89,8 +90,6 @@ public abstract class AbstractPathStorage<F> extends AbstractStorage<Path> {
     protected boolean isExist(Path path) {
         return Files.isRegularFile(path);
     }
-
-    abstract protected Resume doRead(InputStream is) throws IOException, ClassNotFoundException;
 
     @Override
     protected List<Resume> getAll() {
