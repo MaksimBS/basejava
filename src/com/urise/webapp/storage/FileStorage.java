@@ -12,9 +12,9 @@ import java.util.Objects;
 public class FileStorage<F> extends AbstractStorage<File> {
     private final File directory;
 
-    private ObjectStreamInOut stream;
+    private Stream stream;
 
-    protected FileStorage(File directory) {
+    protected FileStorage(File directory, Stream stream) {
         Objects.requireNonNull(directory, "directory must not be null");
         if (!directory.isDirectory()) {
             throw new IllegalArgumentException(directory.getAbsolutePath() + " is not directory");
@@ -22,7 +22,7 @@ public class FileStorage<F> extends AbstractStorage<File> {
         if (!directory.canRead() || !directory.canWrite()) {
             throw new IllegalArgumentException(directory.getAbsolutePath() + " is not readable/writable");
         }
-        this.stream = new ObjectStreamInOut();
+        this.stream = stream;
         this.directory = directory;
     }
 

@@ -14,15 +14,15 @@ import java.util.Objects;
 
 public class PathStorage<F> extends AbstractStorage<Path> {
     private final Path directory;
-    private ObjectStreamInOut stream;
+    private Stream stream;
 
-    protected PathStorage(String dir) {
+    protected PathStorage(String dir, Stream stream) {
         directory = Paths.get(dir);
         Objects.requireNonNull(directory, "directory must not be null");
         if (!Files.isDirectory(directory) || !Files.isWritable(directory)) {
             throw new IllegalArgumentException(dir + " is not directory or is not writable");
         }
-        this.stream = new ObjectStreamInOut();
+        this.stream = stream;
     }
 
     @Override
@@ -80,7 +80,7 @@ public class PathStorage<F> extends AbstractStorage<Path> {
     @Override
     protected Resume getResume(Path path) {
         try {
-            return stream.doRead(new BufferedInputStream(new FileInputStream(String.valueOf(path.getFileName()))));
+            return stream.doRead(new BufferedInputStream(Files.newInputStream(path)));
         } catch (IOException e) {
             throw new StorageException("File read error", path.getFileName().toString(), e);
         }

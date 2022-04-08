@@ -4,6 +4,7 @@ import java.io.File;
 
 public class FileStorageTest extends AbstractStorageTest {
     public FileStorageTest() {
-        super(new FileStorage<File>(new File(STORAGE_DIR)));
+
+        super(new FileStorage<File>(new File(STORAGE_DIR), new ObjectStreamInOut()));
     }
 }
