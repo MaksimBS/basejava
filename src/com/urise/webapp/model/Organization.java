@@ -86,7 +86,7 @@ public class Organization implements Serializable {
 
         @Override
         public String toString() {
-            String strEndDate = endDate.isBefore(LocalDate.now())?DataUtil.toDateResume(endDate):" /по н.в./ ";
+            String strEndDate = endDate.isBefore(LocalDate.now()) ? DataUtil.toDateResume(endDate) : " /по н.в./ ";
 
             return DataUtil.toDateResume(startDate) + "-" + strEndDate + title + " " + description;
         }

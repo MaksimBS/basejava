@@ -5,7 +5,7 @@ import com.urise.webapp.model.Resume;
 
 import java.io.*;
 
-public class ObjectStreamInOut implements Stream{
+public class ObjectStreamInOut implements Stream {
 
     @Override
     public void doWrite(Resume resume, OutputStream os) throws IOException {
