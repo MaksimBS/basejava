@@ -1,10 +1,12 @@
 package com.urise.webapp.storage;
 
+import com.urise.webapp.storage.stream.ObjectStreamInOut;
+
 import java.io.File;
 
 public class FileStorageTest extends AbstractStorageTest {
     public FileStorageTest() {
 
-        super(new FileStorage<File>(new File(STORAGE_DIR), new ObjectStreamInOut()));
+        super(new FileStorage(new File(STORAGE_DIR), new ObjectStreamInOut()));
     }
 }

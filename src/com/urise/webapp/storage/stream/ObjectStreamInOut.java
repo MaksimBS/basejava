@@ -1,14 +1,14 @@
-package com.urise.webapp.storage;
+package com.urise.webapp.storage.stream;
 
 import com.urise.webapp.exception.StorageException;
 import com.urise.webapp.model.Resume;
 
 import java.io.*;
 
-public class ObjectStreamInOut implements Stream {
+public class ObjectStreamInOut implements StreamSerializer {
 
     @Override
-    public void doWrite(Resume resume, OutputStream os) throws IOException {
+    public void doUpdate(Resume resume, OutputStream os) throws IOException {
         try (ObjectOutputStream oos = new ObjectOutputStream(os)) {
             oos.writeObject(resume);
         }
