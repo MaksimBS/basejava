@@ -62,7 +62,8 @@ public class ResumeTestData {
 
         return resume;
     }
-
+}
+/*
     public static void main(String[] args) {
 
         Resume resume1 = newResume("uuid1", "Георгий");
@@ -98,4 +99,5 @@ public class ResumeTestData {
             }
         }
     }
-}
+
+        */

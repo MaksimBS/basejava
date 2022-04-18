@@ -2,7 +2,7 @@ package com.urise.webapp.storage;
 
 import com.urise.webapp.exception.StorageException;
 import com.urise.webapp.model.Resume;
-import com.urise.webapp.storage.stream.StreamSerializer;
+import com.urise.webapp.storage.serializer.StreamSerializer;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -71,10 +71,10 @@ public class FileStorage extends AbstractStorage<File> {
     protected void saveResume(Resume resume, File file) {
         try {
             file.createNewFile();
-            stream.doUpdate(resume, new BufferedOutputStream(new FileOutputStream(file)));
         } catch (IOException e) {
             throw new StorageException("File write error", file.getName(), e);
         }
+        updateResume(resume, file);
     }
 
     @Override
@@ -98,7 +98,7 @@ public class FileStorage extends AbstractStorage<File> {
 
     private File[] filesList() {
         File[] files = directory.listFiles();
-        if (files == null) throw new StorageException("Directory is empty", "");
+        if (files == null) throw new StorageException("Directory is empty");
         return files;
     }
 }
