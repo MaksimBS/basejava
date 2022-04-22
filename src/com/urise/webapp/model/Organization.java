@@ -27,6 +27,12 @@ public class Organization implements Serializable {
         this.positions = new ArrayList<>();
     }
 
+    public Organization(String name, String url, List<Position> positions) {
+        Objects.requireNonNull(name, "name must not be null");
+        this.homePage = new Link(name, url);
+        this.positions = positions;
+    }
+
     public Organization(String name, String url, LocalDate startDate, LocalDate endDate, String title, String description) {
         Objects.requireNonNull(startDate, "startDate must not be null");
         Objects.requireNonNull(endDate, "endDate must not be null");
@@ -35,6 +41,10 @@ public class Organization implements Serializable {
         this.homePage = new Link(name, url);
         this.positions = new ArrayList<>();
         setPosition(startDate, endDate, title, description);
+    }
+
+    public Link getHomePage() {
+        return homePage;
     }
 
     public List<Position> getPosition() {
@@ -74,6 +84,22 @@ public class Organization implements Serializable {
         private String description;
 
         public Position() {
+        }
+
+        public LocalDate getStartDate() {
+            return startDate;
+        }
+
+        public LocalDate getEndDate() {
+            return endDate;
+        }
+
+        public String getTitle() {
+            return title;
+        }
+
+        public String getDescription() {
+            return description;
         }
 
         public Position(LocalDate startDate, LocalDate endDate, String title, String description) {

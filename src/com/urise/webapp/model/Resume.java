@@ -56,6 +56,10 @@ public class Resume implements Comparable<Resume>, Serializable {
         return uuid;
     }
 
+    public String getFullName() {
+        return fullName;
+    }
+
     @Override
     public int compareTo(Resume p) {
         int tempResult = fullName.compareTo(p.fullName);

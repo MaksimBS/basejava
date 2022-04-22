@@ -62,8 +62,8 @@ public class ResumeTestData {
 
         return resume;
     }
-}
-/*
+
+
     public static void main(String[] args) {
 
         Resume resume1 = newResume("uuid1", "Георгий");
@@ -80,8 +80,13 @@ public class ResumeTestData {
             AbstractSection<List> section = resume1.getSections().get(key);
 
             switch (key) {
-                case OBJECTIVE, PERSONAL -> System.out.println('\t' + section.toString());
-                case EDUCATION, EXPERIENCE -> {
+                case OBJECTIVE:
+                case PERSONAL: {
+                    System.out.println('\t' + section.toString());
+                    break;
+                }
+                case EDUCATION:
+                case EXPERIENCE: {
                     List<Organization> listOrganization = section.getInfo();
                     for (Organization items : listOrganization) {
                         System.out.println('\t' + items.toString());
@@ -89,8 +94,9 @@ public class ResumeTestData {
                             System.out.println("        " + position.toString());
                         }
                     }
+                    break;
                 }
-                default -> {
+                default: {
                     List<String> listSection = section.getInfo();
                     for (Object items : listSection) {
                         System.out.println('\t' + items.toString());
@@ -100,4 +106,4 @@ public class ResumeTestData {
         }
     }
 
-        */
+}
