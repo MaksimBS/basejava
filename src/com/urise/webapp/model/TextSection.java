@@ -5,7 +5,7 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import java.util.Objects;
 
 @XmlAccessorType(XmlAccessType.FIELD)
-public class TextSection extends AbstractSection<String> {
+public class TextSection extends AbstractSection {
     private String content;
 
     public TextSection() {
@@ -25,7 +25,6 @@ public class TextSection extends AbstractSection<String> {
         return content;
     }
 
-    @Override
     public String getInfo() {
         return content;
     }

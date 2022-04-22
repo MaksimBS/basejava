@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Objects;
 
 @XmlAccessorType(XmlAccessType.FIELD)
-public class OrganizationSection extends AbstractSection<List<Organization>> {
+public class OrganizationSection extends AbstractSection {
 
     private List<Organization> organizations;
 
@@ -18,7 +18,6 @@ public class OrganizationSection extends AbstractSection<List<Organization>> {
         this.organizations = organizations;
     }
 
-    @Override
     public List<Organization> getInfo() {
         return organizations;
     }

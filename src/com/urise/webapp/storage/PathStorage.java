@@ -56,7 +56,7 @@ public class PathStorage extends AbstractStorage<Path> {
     @Override
     protected void updateResume(Resume resume, Path path) {
         try {
-            stream.doUpdate(resume, new BufferedOutputStream(Files.newOutputStream(path)));
+            stream.doWrite(resume, new BufferedOutputStream(Files.newOutputStream(path)));
         } catch (IOException e) {
             throw new StorageException("File write error", resume.getUuid(), e);
         }

@@ -1,13 +1,9 @@
 package com.urise.webapp;
 
-import com.urise.webapp.exception.ExistStorageException;
-import com.urise.webapp.exception.NotExistStorageException;
 import com.urise.webapp.model.Resume;
 import com.urise.webapp.storage.ArrayStorage;
 
-/**
- * Test for your com.urise.webapp.storage.ArrayStorage implementation
- */
+
 public class MainTestArrayStorage {
     static final ArrayStorage ARRAY_STORAGE = new ArrayStorage();
 
@@ -24,22 +20,15 @@ public class MainTestArrayStorage {
         ARRAY_STORAGE.save(r3);
         System.out.println("Entry r3: " + ARRAY_STORAGE.get(r3.getUuid()));
         System.out.print("Entry r3 again: ");
-        try {
-            ARRAY_STORAGE.save(r3);
-        } catch (ExistStorageException e) {
-            System.out.println(e);
-        }
+        ARRAY_STORAGE.save(r3);
 
 
         //Get
         System.out.println("Get r1: " + ARRAY_STORAGE.get(r1.getUuid()));
         System.out.println("Size: " + ARRAY_STORAGE.size());
         System.out.print("Get dummy: ");
-        try {
-            ARRAY_STORAGE.get("dummy");
-        } catch (NotExistStorageException e) {
-            System.out.println(e);
-        }
+        ARRAY_STORAGE.get("dummy");
+
 
         System.out.println();
 
@@ -49,20 +38,13 @@ public class MainTestArrayStorage {
         System.out.println();
         System.out.print("Update new resume: ");
         Resume r4 = new Resume("uuid4");
-        try {
-            ARRAY_STORAGE.update(r4);
-        } catch (NotExistStorageException e) {
-            System.out.println(e);
-        }
+        ARRAY_STORAGE.update(r4);
 
         //delete
         printAll();
         ARRAY_STORAGE.delete(r1.getUuid());
-        try {
-            ARRAY_STORAGE.delete(r4.getUuid());
-        } catch (NotExistStorageException e) {
-            System.out.println(e);
-        }
+        ARRAY_STORAGE.delete(r4.getUuid());
+
         printAll();
 
         //clear

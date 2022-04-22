@@ -15,18 +15,18 @@ public class MainFile {
         if (files != null) {
             for (File file : files) {
                 if (file.isFile()) {
-                    System.out.println(buildString('-', Raw) + "File: " + file.getName());
+                    System.out.println(buildString(Raw) + "File: " + file.getName());
                 } else if (file.isDirectory()) {
-                    System.out.println(buildString('-', Raw) + "Directory: " + file.getName());
+                    System.out.println(buildString(Raw) + "Directory: " + file.getName());
                     printDirectory(file, Raw * 2);
                 }
             }
         }
     }
 
-    static String buildString(char c, int n) {
+    static String buildString(int n) {
         char[] arr = new char[n];
-        Arrays.fill(arr, c);
+        Arrays.fill(arr, '-');
         return new String(arr);
     }
 }

@@ -13,7 +13,7 @@ import java.util.Objects;
 public class FileStorage extends AbstractStorage<File> {
     private final File directory;
 
-    private StreamSerializer stream;
+    private final StreamSerializer stream;
 
     protected FileStorage(File directory, StreamSerializer stream) {
         Objects.requireNonNull(directory, "directory must not be null");
@@ -56,7 +56,7 @@ public class FileStorage extends AbstractStorage<File> {
     @Override
     protected void updateResume(Resume resume, File file) {
         try {
-            stream.doUpdate(resume, new BufferedOutputStream(new FileOutputStream(file)));
+            stream.doWrite(resume, new BufferedOutputStream(new FileOutputStream(file)));
         } catch (IOException e) {
             throw new StorageException("File write error", resume.getUuid(), e);
         }
@@ -70,7 +70,8 @@ public class FileStorage extends AbstractStorage<File> {
     @Override
     protected void saveResume(Resume resume, File file) {
         try {
-            file.createNewFile();
+            if (!file.createNewFile())
+                throw new StorageException("File write error", file.getName());
         } catch (IOException e) {
             throw new StorageException("File write error", file.getName(), e);
         }

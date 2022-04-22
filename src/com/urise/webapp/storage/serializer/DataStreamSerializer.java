@@ -11,7 +11,7 @@ import java.util.List;
 public class DataStreamSerializer implements StreamSerializer {
 
     @Override
-    public void doUpdate(Resume r, OutputStream os) throws IOException {
+    public void doWrite(Resume r, OutputStream os) throws IOException {
         try (DataOutputStream dos = new DataOutputStream(os)) {
             dos.writeUTF(r.getUuid());
             dos.writeUTF(r.getFullName());
@@ -25,12 +25,12 @@ public class DataStreamSerializer implements StreamSerializer {
                 SectionType type = entry.getKey();
                 AbstractSection section = entry.getValue();
                 dos.writeUTF(type.name());
-                writeSection (dos,type,section);
+                writeSection(dos, type, section);
             });
         }
     }
 
-    private void writeSection (DataOutputStream dos, SectionType type, AbstractSection section) throws IOException {
+    private void writeSection(DataOutputStream dos, SectionType type, AbstractSection section) throws IOException {
         switch (type) {
             case ACHIEVEMENT:
             case QUALIFICATIONS: {

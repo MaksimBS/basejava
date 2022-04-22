@@ -11,10 +11,6 @@ public class DataUtil {
         return LocalDate.of(LocalDate.now().getYear(), LocalDate.now().getMonth(), 1);
     }
 
-    public static LocalDate of(int year, Month month) {
-        return LocalDate.of(year, month, 1);
-    }
-
     public static LocalDate of(int year, int month) {
         return LocalDate.of(year, Month.of(month), 1);
     }

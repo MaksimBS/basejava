@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Objects;
 
 @XmlAccessorType(XmlAccessType.FIELD)
-public class ListSection extends AbstractSection<List<String>> {
+public class ListSection extends AbstractSection {
     private List<String> items;
 
     public ListSection() {
@@ -22,7 +22,6 @@ public class ListSection extends AbstractSection<List<String>> {
         return items.toString();
     }
 
-    @Override
     public List<String> getInfo() {
         return items;
     }

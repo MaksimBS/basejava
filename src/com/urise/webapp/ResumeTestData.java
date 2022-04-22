@@ -4,7 +4,7 @@ import com.urise.webapp.model.*;
 import com.urise.webapp.util.DataUtil;
 
 import java.util.ArrayList;
-import java.util.List;
+import java.util.Map;
 
 public class ResumeTestData {
 
@@ -45,7 +45,6 @@ public class ResumeTestData {
                 "Автор проекта.", "Создание, организация и проведение Java онлайн проектов и стажировок."));
         resume.setSection(SectionType.EXPERIENCE, new OrganizationSection(itemsExperience));
 
-
         ArrayList<Organization> itemsEducation = new ArrayList<>();
 
         Organization Organization = new Organization("Заочная физико-техническая школа при МФТИ", "https://www.school.mipt.ru/");
@@ -63,7 +62,6 @@ public class ResumeTestData {
         return resume;
     }
 
-
     public static void main(String[] args) {
 
         Resume resume1 = newResume("uuid1", "Георгий");
@@ -74,11 +72,10 @@ public class ResumeTestData {
             System.out.println('\t' + key.getTitle() + ": " + resume1.getContacts().get(key));
         }
         System.out.println();
-
-        for (SectionType key : resume1.getSections().keySet()) {
+        for (Map.Entry<SectionType, AbstractSection> sections : resume1.getSections().entrySet()) {
+            SectionType key = sections.getKey();
+            AbstractSection section = sections.getValue();
             System.out.println(key.getTitle() + ": ");
-            AbstractSection<List> section = resume1.getSections().get(key);
-
             switch (key) {
                 case OBJECTIVE:
                 case PERSONAL: {
@@ -87,8 +84,7 @@ public class ResumeTestData {
                 }
                 case EDUCATION:
                 case EXPERIENCE: {
-                    List<Organization> listOrganization = section.getInfo();
-                    for (Organization items : listOrganization) {
+                    for (Organization items : ((OrganizationSection) section).getInfo()) {
                         System.out.println('\t' + items.toString());
                         for (Object position : items.getPosition()) {
                             System.out.println("        " + position.toString());
@@ -97,13 +93,12 @@ public class ResumeTestData {
                     break;
                 }
                 default: {
-                    List<String> listSection = section.getInfo();
-                    for (Object items : listSection) {
+                    for (Object items : ((ListSection) section).getInfo()) {
                         System.out.println('\t' + items.toString());
                     }
                 }
+
             }
         }
     }
-
 }
