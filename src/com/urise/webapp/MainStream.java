@@ -3,7 +3,6 @@ package com.urise.webapp;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 
 public class MainStream {
     public static void main(String[] args) {
@@ -14,16 +13,12 @@ public class MainStream {
     }
 
     public static int minValue(int[] values) {
-        int[] list = Arrays.stream(values).distinct().sorted().toArray();
-        return IntStream.range(0, list.length)
-                .map(i -> (int) (Math.pow(10, list.length - 1 - i) * list[i]))
-                .sum();
+        return Arrays.stream(values).distinct().sorted().reduce(0, (a, b) -> 10 * a + b);
     }
 
     public static List<Integer> oddOrEven(List<Integer> integers) {
-        return integers.stream().filter(
-                        integers.stream().mapToInt(Integer::intValue)
-                                .sum() % 2 != 0 ? n -> n % 2 == 0 : n -> n % 2 != 0)
-                .collect(Collectors.toList());
+        int mod = integers.stream().mapToInt(Integer::intValue)
+                .sum() % 2;
+        return integers.stream().filter(n -> n % 2 != mod).collect(Collectors.toList());
     }
 }
