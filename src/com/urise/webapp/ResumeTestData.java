@@ -1,15 +1,14 @@
 package com.urise.webapp;
 
 import com.urise.webapp.model.*;
-import com.urise.webapp.util.DataUtil;
 
-import java.util.ArrayList;
 import java.util.Map;
 
 public class ResumeTestData {
 
     public static Resume newResume(String uuid, String fullName) {
         Resume resume = new Resume(uuid, fullName);
+        /*
         // contacts
         resume.setContacts(ContactType.PHONE, "+7(921) 855-0482");
         resume.setContacts(ContactType.SKYPE, "grigory.kislin");
@@ -58,7 +57,7 @@ public class ResumeTestData {
         itemsEducation.add(Organization);
 
         resume.setSection(SectionType.EDUCATION, new OrganizationSection(itemsEducation));
-
+        */
         return resume;
     }
 
