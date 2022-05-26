@@ -8,7 +8,7 @@ public class ResumeTestData {
 
     public static Resume newResume(String uuid, String fullName) {
         Resume resume = new Resume(uuid, fullName);
-        /*
+
         // contacts
         resume.setContacts(ContactType.PHONE, "+7(921) 855-0482");
         resume.setContacts(ContactType.SKYPE, "grigory.kislin");
@@ -17,6 +17,7 @@ public class ResumeTestData {
         resume.setContacts(ContactType.GITHUB, "https://github.com/gkislin");
         resume.setContacts(ContactType.STATCKOVERFLOW, "https://stackoverflow.com/users/548473");
         resume.setContacts(ContactType.HOME_PAGE, "https://gkislin.ru/");
+        /*
         //Sections
         resume.setSection(SectionType.OBJECTIVE, new TextSection("Ведущий стажировок и корпоративного обучения по Java Web и Enterprise технологиям"));
         resume.setSection(SectionType.PERSONAL, new TextSection("Аналитический склад ума, сильная логика, креативность, инициативность. Пурист кода и архитектуры."));
