@@ -29,6 +29,11 @@ public class TextSection extends AbstractSection {
         return content;
     }
 
+    public void setText(String text) {
+        Objects.requireNonNull(text, "text must not be null");
+        this.content = text;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

@@ -1,7 +1,9 @@
 package com.urise.webapp;
 
 import com.urise.webapp.model.*;
+import com.urise.webapp.util.DataUtil;
 
+import java.util.ArrayList;
 import java.util.Map;
 
 public class ResumeTestData {
@@ -17,7 +19,7 @@ public class ResumeTestData {
         resume.setContacts(ContactType.GITHUB, "https://github.com/gkislin");
         resume.setContacts(ContactType.STATCKOVERFLOW, "https://stackoverflow.com/users/548473");
         resume.setContacts(ContactType.HOME_PAGE, "https://gkislin.ru/");
-        /*
+
         //Sections
         resume.setSection(SectionType.OBJECTIVE, new TextSection("Ведущий стажировок и корпоративного обучения по Java Web и Enterprise технологиям"));
         resume.setSection(SectionType.PERSONAL, new TextSection("Аналитический склад ума, сильная логика, креативность, инициативность. Пурист кода и архитектуры."));
@@ -36,13 +38,13 @@ public class ResumeTestData {
         itemsQualifications.add("Version control: Subversion, Git, Mercury, ClearCase, Perforce");
         itemsQualifications.add("DB: PostgreSQL(наследование, pgplsql, PL/Python), Redis (Jedis), H2, Oracle");
         resume.setSection(SectionType.QUALIFICATIONS, new ListSection(itemsQualifications));
-
+/*
         ArrayList<Organization> itemsExperience = new ArrayList<>();
         itemsExperience.add(new Organization("Java Online Projects", "https://javaops.ru/",
                 DataUtil.of(2013, 10), DataUtil.of(), "Автор проекта.", "Создание, организация и проведение Java онлайн проектов и стажировок."));
         itemsExperience.add(new Organization("Wrike", "https://www.wrike.com/",
                 DataUtil.of(2014, 10), DataUtil.of(2016, 1),
-                "Автор проекта.", "Создание, организация и проведение Java онлайн проектов и стажировок."));
+                "Авторd проекта.", "Создание, организация и проведение Java онлайн проектов и стажировок."));
         resume.setSection(SectionType.EXPERIENCE, new OrganizationSection(itemsExperience));
 
         ArrayList<Organization> itemsEducation = new ArrayList<>();
