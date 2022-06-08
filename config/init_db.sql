@@ -14,22 +14,12 @@ CREATE TABLE contact (
 CREATE UNIQUE INDEX contact_uuid_type_index
     ON contact (resume_uuid, type);
 
-create table section
-(
-    id          serial not null
-        constraint section_pk
-            primary key,
-    type        text   not null,
-    value       text   not null,
-    resume_uuid char(36)
-        constraint section_resume_uuid_fk
-            references resume
-            on delete cascade
+CREATE TABLE section (
+                         id          SERIAL PRIMARY KEY,
+                         resume_uuid CHAR(36) NOT NULL REFERENCES resume (uuid) ON DELETE CASCADE,
+                         type        TEXT     NOT NULL,
+                         content     TEXT     NOT NULL
 );
 
-alter table section
-    owner to postgres;
-
-create unique index section_id_uindex
-    on section (id);
-
+CREATE UNIQUE INDEX section_idx
+    ON section (resume_uuid, type);
