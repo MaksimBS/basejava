@@ -11,17 +11,17 @@ import java.util.List;
 public class DataStreamSerializer implements StreamSerializer {
 
     @Override
-    public void doWrite(Resume r, OutputStream os) throws IOException {
+    public void doWrite(Resume resume, OutputStream os) throws IOException {
         try (DataOutputStream dos = new DataOutputStream(os)) {
-            dos.writeUTF(r.getUuid());
-            dos.writeUTF(r.getFullName());
+            dos.writeUTF(resume.getUuid());
+            dos.writeUTF(resume.getFullName());
             //output contacts
-            writeCollection(dos, r.getContacts().entrySet(), entry -> {
+            writeCollection(dos, resume.getContacts().entrySet(), entry -> {
                 dos.writeUTF(entry.getKey().name());
                 dos.writeUTF(entry.getValue());
             });
             //output Section
-            writeCollection(dos, r.getSections().entrySet(), entry -> {
+            writeCollection(dos, resume.getSections().entrySet(), entry -> {
                 SectionType type = entry.getKey();
                 AbstractSection section = entry.getValue();
                 dos.writeUTF(type.name());

@@ -37,4 +37,13 @@ public class Config {
     public String getStorageDir() {
         return storageDir;
     }
+
+    private static File getHomeDir() {
+        String prop = System.getProperty("homeDir");
+        File homeDir = new File(prop == null ? "." : prop);
+        if (!homeDir.isDirectory()) {
+            throw new IllegalStateException(homeDir + " is not directory");
+        }
+        return homeDir;
+    }
 }
