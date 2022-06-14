@@ -3,6 +3,7 @@ package com.urise.webapp.model;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
@@ -12,6 +13,10 @@ public class ListSection extends AbstractSection {
 
     public ListSection() {
         this.items = new ArrayList<>();
+    }
+
+    public ListSection(String... items) {
+        this(Arrays.asList(items));
     }
 
     public ListSection(List<String> items) {
@@ -28,7 +33,7 @@ public class ListSection extends AbstractSection {
         return items.toString();
     }
 
-    public List<String> getInfo() {
+    public List<String> getListSection() {
         return items;
     }
 

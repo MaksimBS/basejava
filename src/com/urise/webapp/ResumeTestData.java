@@ -94,7 +94,7 @@ public class ResumeTestData {
                     break;
                 }
                 default: {
-                    for (Object items : ((ListSection) section).getInfo()) {
+                    for (Object items : ((ListSection) section).getListSection()) {
                         System.out.println('\t' + items.toString());
                     }
                 }

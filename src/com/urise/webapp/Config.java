@@ -10,6 +10,7 @@ import java.util.Properties;
 
 public class Config {
     private static final File PROPS = new File("C:\\Java\\rep\\basejava\\config\\resumes.properties");
+    //protected static final File PROPS = new File(getHomeDir(),"config\\resumes.properties");
     private static final Config INSTANCE = new Config();
 
     private final String storageDir;

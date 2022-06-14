@@ -34,7 +34,7 @@ public class DataStreamSerializer implements StreamSerializer {
         switch (type) {
             case ACHIEVEMENT:
             case QUALIFICATIONS: {
-                writeCollection(dos, ((ListSection) section).getInfo(), dos::writeUTF);
+                writeCollection(dos, ((ListSection) section).getListSection(), dos::writeUTF);
                 break;
             }
             case EXPERIENCE:

@@ -4,8 +4,16 @@ public enum ContactType {
     PHONE("Тел."),
     MOBILE("Мобильный"),
     HOME_PHONE("Домашний тел."),
-    SKYPE("Skype"),
-    MAIL("Почта"),
+    SKYPE("Скайп"){
+        public String toHtml0(String value) {
+            return "<a href='skype:" + value + "'>" + value + "</a>";
+        }
+    },
+    MAIL("E-Mail"){
+        public String toHtml0(String value) {
+            return "<a href='" + value + "'>" + value + "</a>";
+        }
+    },
     LINKEDIN("Профиль LinkedIn"),
     GITHUB("Профиль GitHub"),
     STATCKOVERFLOW("Профиль Stackoverflow"),
@@ -19,5 +27,13 @@ public enum ContactType {
 
     public String getTitle() {
         return title;
+    }
+
+    protected String toHtml0(String value) {
+        return  title + ": "+value;
+    }
+
+    public String toHtml(String value) {
+        return (value ==null ) ? "" : toHtml0(value);
     }
 }

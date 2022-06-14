@@ -25,10 +25,6 @@ public class TextSection extends AbstractSection {
         return content;
     }
 
-    public String getInfo() {
-        return content;
-    }
-
     public void setText(String text) {
         Objects.requireNonNull(text, "text must not be null");
         this.content = text;
