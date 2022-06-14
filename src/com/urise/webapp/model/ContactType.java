@@ -17,7 +17,11 @@ public enum ContactType {
     LINKEDIN("Профиль LinkedIn"),
     GITHUB("Профиль GitHub"),
     STATCKOVERFLOW("Профиль Stackoverflow"),
-    HOME_PAGE("Домашняя страница");
+    HOME_PAGE("Домашняя страница"){
+        public String toHtml0(String value) {
+            return "<a href='" + value + "'>" + value + "</a>";
+        }
+    };
 
     private final String title;
 
