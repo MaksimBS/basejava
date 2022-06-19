@@ -1,6 +1,7 @@
 package com.urise.webapp;
 
 import com.urise.webapp.model.*;
+import com.urise.webapp.util.DataUtil;
 
 import java.util.ArrayList;
 import java.util.Map;
@@ -37,7 +38,7 @@ public class ResumeTestData {
         itemsQualifications.add("Version control: Subversion, Git, Mercury, ClearCase, Perforce");
         itemsQualifications.add("DB: PostgreSQL(наследование, pgplsql, PL/Python), Redis (Jedis), H2, Oracle");
         resume.setSection(SectionType.QUALIFICATIONS, new ListSection(itemsQualifications));
-/*
+
         ArrayList<Organization> itemsExperience = new ArrayList<>();
         itemsExperience.add(new Organization("Java Online Projects", "https://javaops.ru/",
                 DataUtil.of(2013, 10), DataUtil.of(), "Автор проекта.", "Создание, организация и проведение Java онлайн проектов и стажировок."));
@@ -59,7 +60,6 @@ public class ResumeTestData {
         itemsEducation.add(Organization);
 
         resume.setSection(SectionType.EDUCATION, new OrganizationSection(itemsEducation));
-        */
         return resume;
     }
 

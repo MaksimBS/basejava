@@ -2,6 +2,7 @@ package com.urise.webapp.model;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
@@ -13,9 +14,30 @@ public class OrganizationSection extends AbstractSection {
     public OrganizationSection() {
     }
 
+    public OrganizationSection(Organization... organizations) {
+        this(Arrays.asList(organizations));
+    }
+
     public OrganizationSection(List<Organization> organizations) {
         Objects.requireNonNull(organizations, "organizations must not be null");
         this.organizations = organizations;
+    }
+
+    public void addOrganization(Organization organization) {
+        if (OrganizationExist(organization) == -1) {
+            organizations.add(organization);
+        } else {
+            organizations.get(OrganizationExist(organization)).setPosition(organization.getPosition().get(0));
+        }
+    }
+
+    private int OrganizationExist(Organization organization) {
+        for (int i = 0; i < organizations.size(); i++) {
+            if (organization.getPosition().equals(organizations.get(i).getPosition())) {
+                return i;
+            }
+        }
+        return -1;
     }
 
     public List<Organization> getInfo() {

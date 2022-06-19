@@ -8,6 +8,8 @@
     <title>Список резюме</title>
 </head>
 <body>
+<br>
+<button onclick="document.location='resume?action=add'">Добавить новое резюме</button>
 <section>
     <table border="1" cellpadding="8" cellspacing="0">
         <tr>
@@ -25,8 +27,7 @@
             </tr>
         </c:forEach>
     </table>
-    <br>
-    <button onclick="document.location='resume?action=add'">Добавить новое резюме</button>
+
 </section>
 </body>
 </html>

@@ -8,7 +8,9 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.time.YearMonth;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
@@ -17,14 +19,16 @@ public class Organization implements Serializable {
 
     private Link homePage;
     private List<Position> positions;
-
-    public Organization() {
-    }
+    public static final Organization EMPTY = new Organization("", "", Position.EMPTY);
 
     public Organization(String name, String url) {
         Objects.requireNonNull(name, "name must not be null");
         this.homePage = new Link(name, url);
         this.positions = new ArrayList<>();
+    }
+
+    public Organization(String name, String url, Position... positions) {
+        this(name, url, Arrays.asList(positions));
     }
 
     public Organization(String name, String url, List<Position> positions) {
@@ -55,6 +59,10 @@ public class Organization implements Serializable {
         positions.add(new Position(startDate, endDate, title, description));
     }
 
+    public void setPosition(Position position) {
+        positions.add(position);
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -82,8 +90,16 @@ public class Organization implements Serializable {
         private LocalDate endDate;
         private String title;
         private String description;
+        public static final Position EMPTY = new Position();
 
         public Position() {
+        }
+
+        public Position(LocalDate startDate, LocalDate endDate, String title, String description) {
+            this.startDate = startDate;
+            this.endDate = endDate;
+            this.title = title;
+            this.description = description;
         }
 
         public LocalDate getStartDate() {
@@ -100,13 +116,6 @@ public class Organization implements Serializable {
 
         public String getDescription() {
             return description;
-        }
-
-        public Position(LocalDate startDate, LocalDate endDate, String title, String description) {
-            this.startDate = startDate;
-            this.endDate = endDate;
-            this.title = title;
-            this.description = description;
         }
 
         @Override

@@ -7,6 +7,7 @@ import java.util.Objects;
 @XmlAccessorType(XmlAccessType.FIELD)
 public class TextSection extends AbstractSection {
     private String content;
+    public static final TextSection EMPTY = new TextSection("");
 
     public TextSection() {
     }
