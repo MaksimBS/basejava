@@ -3,6 +3,8 @@
 <%@ page import="com.urise.webapp.model.Organization" %>
 <%@ page import="com.urise.webapp.model.OrganizationSection" %>
 <%@ page import="java.util.List" %>
+<%@ page import="com.urise.webapp.util.HtmlUtil" %>
+<%@ page import="com.urise.webapp.util.DataUtil" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
@@ -56,8 +58,7 @@
             request.setAttribute("listSize", ((ListSection) section).getListSection().size());
         %>
         <c:if test="${listSize>0 && !listSection.get(0).equals('')}">
-            <h3><%=sectionEntry.getKey().getTitle()%>
-            </h3>
+            <h3><%=sectionEntry.getKey().getTitle()%></h3>
             <c:forEach var="text" items="${listSection}">
                 <li type="disc">${text}</li>
             </c:forEach>
@@ -65,19 +66,27 @@
     </c:when>
 
     <c:when test="${type=='EXPERIENCE' || type=='EDUCATION'}">
-        <%
-            List<Organization> organizationList = ((OrganizationSection) sectionEntry.getValue()).getInfo();
-            request.setAttribute("orgList", organizationList);
-        %>
-        <c:forEach var="org" items="${orgList}">
-            <h4><a href="${org.homePage}">${org.position}</a></h4>
-            <c:forEach var="period" items="${org.position}">
-                <p>${period.startDate} - ${period.endDate}</p>
-                <strong>${period.title}</strong>
-                <p>${period.description}</p>
+        <h3><%=sectionEntry.getKey().getTitle()%></h3>
+        <c:forEach var="org" items="<%=((OrganizationSection) section).getInfo()%>">
+            <tr>
+                <td colspan="2">
+                    <c:choose>
+                        <c:when test="${empty org.homePage.url}">
+                            <h3>${org.homePage.name}</h3>
+                        </c:when>
+                        <c:otherwise>
+                            <h3><a href="${org.homePage.url}">${org.homePage.name}</a></h3>
+                        </c:otherwise>
+                    </c:choose>
+                </td>
+            </tr>
+            <c:forEach var="position" items="${org.position}">
+                <jsp:useBean id="position" type="com.urise.webapp.model.Organization.Position"/>
+                <h3><%=HtmlUtil.formatDates(position)%></h3>
+                <th>${position.title}</th>
+                <th>${position.description}</th>
             </c:forEach>
         </c:forEach>
-
     </c:when>
 
     </c:choose>

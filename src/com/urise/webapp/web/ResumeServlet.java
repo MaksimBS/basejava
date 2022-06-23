@@ -26,12 +26,14 @@ public class ResumeServlet extends javax.servlet.http.HttpServlet {
     public void init(ServletConfig config) throws ServletException {
         super.init(config);
         storage = Config.get().getStorage();
+
     }
 
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws javax.servlet.ServletException, IOException {
         request.setCharacterEncoding("UTF-8");
         String uuid = request.getParameter("uuid");
         String fullName = request.getParameter("fullName");
+
         final boolean isCreate = (uuid == null || uuid.length() == 0);
         Resume r;
         if (isCreate) {
@@ -40,6 +42,7 @@ public class ResumeServlet extends javax.servlet.http.HttpServlet {
             r = storage.get(uuid);
             r.setFullName(fullName);
         }
+
         for (ContactType type : ContactType.values()) {
             String value = request.getParameter(type.name());
             if (HtmlUtil.isEmpty(value)) {
@@ -57,11 +60,11 @@ public class ResumeServlet extends javax.servlet.http.HttpServlet {
                 switch (type) {
                     case OBJECTIVE:
                     case PERSONAL:
-                        r.setSection(type, new TextSection(value));
+                        r.setSection(type, new TextSection(deleteCRLFOnce(value)));
                         break;
                     case ACHIEVEMENT:
                     case QUALIFICATIONS:
-                        r.setSection(type, new ListSection(value.split("\\n")));
+                        r.setSection(type, new ListSection(listDeleteCRLFOnce(value)));
                         break;
                     case EDUCATION:
                     case EXPERIENCE:
@@ -78,11 +81,7 @@ public class ResumeServlet extends javax.servlet.http.HttpServlet {
                                 String[] descriptions = request.getParameterValues(pfx + "description");
                                 for (int j = 0; j < titles.length; j++) {
                                     if (!HtmlUtil.isEmpty(titles[j])) {
-                                        try {
-                                            positions.add(new Organization.Position(DataUtil.parse(startDates[j]), DataUtil.parse(endDates[j]), titles[j], descriptions[j]));
-                                        } catch (ParseException e) {
-                                            e.printStackTrace();
-                                        }
+                                        positions.add(new Organization.Position(DataUtil.parse(startDates[j]), DataUtil.parse(endDates[j]), titles[j], deleteCRLFOnce(descriptions[j])));
                                     }
                                 }
                                 orgs.add(new Organization(name, urls[i], positions));

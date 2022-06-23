@@ -17,13 +17,10 @@
 <jsp:include page="fragments/header.jsp"/>
 <section>
     <form method="post" action="resume" enctype="application/x-www-form-urlencoded">
-        <button type="submit">Сохранить</button>
-        <button onclick="window.history.back()">Отменить</button>
-
         <input type="hidden" name="uuid" value="${resume.uuid}">
         <h1>Имя:</h1>
         <dl>
-            <input type="text" name="fullName" size=55 value="${resume.fullName}">
+            <input type="text" required name="fullName" size=55 value="${resume.fullName}">
         </dl>
         <h2>Контакты:</h2>
         <c:forEach var="type" items="<%=ContactType.values()%>">
@@ -44,10 +41,12 @@
                 <c:when test="${type=='PERSONAL'}">
                     <textarea name='${type}' cols=75 rows=5><%=section%></textarea>
                 </c:when>
+
                 <c:when test="${type=='QUALIFICATIONS' || type=='ACHIEVEMENT'}">
-                    <textarea name='${type}' cols=75
-                              rows=5><%=String.join("\n", ((ListSection) section).getListSection())%></textarea
+                     <textarea name='${type}' cols=75
+                               rows=5><%=String.join("\n", ((ListSection) section).getListSection())%></textarea>
                 </c:when>
+
                 <c:when test="${type=='EXPERIENCE' || type=='EDUCATION'}">
                     <c:forEach var="org" items="<%=((OrganizationSection) section).getInfo()%>"
                                varStatus="counter">
@@ -68,15 +67,14 @@
                                     <dt>Начальная дата:</dt>
                                     <dd>
                                         <input type="text" name="${type}${counter.index}startDate" size=10
-                                               value="<%=DataUtil.toDateResume(pos.getStartDate())%>" placeholder="MM/yyyy">
+                                               value="<%=DataUtil.format(pos.getStartDate())%>" placeholder="MM/yyyy">
                                     </dd>
                                 </dl>
                                 <dl>
                                     <dt>Конечная дата:</dt>
                                     <dd>
                                         <input type="text" name="${type}${counter.index}endDate" size=10
-                                               value="<%=DataUtil.toDateResume(pos.getEndDate())%>"
-                                               placeholder="MM/yyyy">
+                                               value="<%=DataUtil.format(pos.getEndDate())%>" placeholder="MM/yyyy">
                                 </dl>
                                 <dl>
                                     <dt>Должность:</dt>
@@ -94,6 +92,8 @@
                 </c:when>
             </c:choose>
         </c:forEach>
+        <button type="submit">Сохранить</button>
+        <button onclick="window.history.back()">Отменить</button>
     </form>
 </section>
 <jsp:include page="fragments/footer.jsp"/>
